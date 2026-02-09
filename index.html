@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kişisel Asistanım</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-label="Bildirimler"></div>
+
+    <div class="app-container">
+        
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-terminal"></i> <span>RootPanel</span> 
+            </div>
+            
+            <nav class="menu">
+                <ul>
+                    <li onclick="showPage('dashboard')" class="active" id="nav-dashboard">
+                        <i class="fas fa-home"></i> Genel Bakış
+                    </li>
+                    <li onclick="showPage('ctf')" id="nav-ctf">
+                        <i class="fas fa-flag"></i> CTF & Tools
+                    </li>
+                    <li onclick="showPage('ai-tools')" id="nav-ai-tools">
+                        <i class="fas fa-microchip"></i> Yapay Zekalar
+                    </li>
+                    <li onclick="showPage('websites')" id="nav-websites">
+                        <i class="fas fa-globe"></i> Web Siteleri
+                    </li>
+                    <li onclick="showPage('projects')" id="nav-projects">
+                        <i class="fas fa-code-branch"></i> Projelerim
+                    </li>
+                    <li onclick="showPage('passwords')" id="nav-passwords">
+                        <i class="fas fa-key"></i> Şifre Yöneticisi
+                    </li>
+                    <li onclick="showPage('agenda')" id="nav-agenda">
+                        <i class="fas fa-calendar-alt"></i> Ajanda
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-profile">
+                <div class="profile-info">
+                    <div class="avatar"><i class="fas fa-user-secret"></i></div>
+                    <span>Admin</span>
+                </div>
+                <div class="profile-actions">
+                    <button onclick="openSettingsModal()" class="theme-btn" title="Ayarlar & Yedekleme">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button onclick="toggleTheme()" class="theme-btn" title="Tema Değiştir">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header>
+                <h2 id="page-title">Genel Bakış</h2>
+                <div class="date-display" id="currentDate">Tarih Yükleniyor...</div>
+            </header>
+
+            <section id="dashboard" class="page active-page">
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="icon-box blue"><i class="fas fa-check-square"></i></div>
+                        <div class="info">
+                            <h3>Görevler</h3>
+                            <p id="stat-task-count">0 Aktif</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box purple"><i class="fas fa-code"></i></div>
+                        <div class="info">
+                            <h3>Projeler</h3>
+                            <p id="stat-project-count">0 Devam Eden</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box orange"><i class="fas fa-clock"></i></div>
+                        <div class="info">
+                            <h3>Yaklaşan (7 Gün)</h3>
+                            <p id="stat-upcoming-count">0 Hatırlatma</p>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="dashboard-widgets">
+                    <div class="widget-card">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-rocket"></i> Hızlı Erişim</h3>
+                            <div class="widget-actions">
+                                <button onclick="toggleLinkEditMode()" class="btn-icon-small" id="btnEditLinks" title="Düzenle">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button onclick="openLinkModal()" class="btn-icon-small" title="Link Ekle">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="quick-links" id="quickLinksContainer"></div>
+                    </div>
+
+                    <div class="widget-card timer-card">
+                        <h3><i class="fas fa-stopwatch"></i> Kronometre</h3>
+                        <div class="timer-display" id="timer">00:00</div>
+                        <div class="timer-controls">
+                            <button onclick="startTimer()" class="btn-small start" title="Başlat"><i class="fas fa-play"></i></button>
+                            <button onclick="stopTimer()" class="btn-small stop" title="Durdur"><i class="fas fa-pause"></i></button>
+                            <button onclick="resetTimer()" class="btn-small reset" title="Sıfırla"><i class="fas fa-redo"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content-grid">
+                    <div class="content-widget notes-widget">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-sticky-note"></i> Panom</h3>
+                            <div class="header-right">
+                                <span class="count-badge" id="noteCount">0</span>
+                                <button onclick="quickAddNote()" class="btn-icon-small" title="Hızlı Not Ekle">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="notes-list" id="dashboardNotesList">
+                            <div class="empty-state">Henüz not yok.</div>
+                        </div>
+                    </div>
+
+                    <div class="content-widget tasks-widget">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-check-square"></i> Görevlerim</h3>
+                            <div class="header-right">
+                                <span class="count-badge" id="taskCount">0</span>
+                                <button onclick="quickAddTask()" class="btn-icon-small" title="Görev Ekle">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tasks-list" id="dashboardTasksList">
+                            <div class="empty-state">Görev eklenmedi.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="linkModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>Yeni Link Ekle</h3>
+                        <div class="form-group">
+                            <label>Site Adı:</label>
+                            <input type="text" id="linkName" placeholder="Örn: GitHub">
+                        </div>
+                        <div class="form-group">
+                            <label>URL:</label>
+                            <input type="text" id="linkUrl" placeholder="https://...">
+                        </div>
+                        <div class="form-group">
+                            <label>İkon (Opsiyonel):</label>
+                            <select id="linkIcon">
+                                <option value="fas fa-link">Varsayılan</option>
+                                <option value="fab fa-github">GitHub</option>
+                                <option value="fab fa-linkedin">LinkedIn</option>
+                                <option value="fas fa-cube">Küp</option>
+                                <option value="fas fa-robot">Robot</option>
+                                <option value="fas fa-brain">Beyin</option>
+                                <option value="fas fa-code">Kod</option>
+                                <option value="fas fa-terminal">Terminal</option>
+                                <option value="fas fa-university">Üniversite</option>
+                                <option value="fas fa-book-reader">Kitap/Ders</option>
+                            </select>
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="closeLinkModal()" class="btn-cancel">İptal</button>
+                            <button onclick="saveLink()" class="btn-save">Ekle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="noteModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>📌 Yeni Not Ekle</h3>
+                        <div class="form-group">
+                            <label>Notun:</label>
+                            <textarea id="newNoteText" rows="4" placeholder="Buraya yaz..."></textarea>
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="closeNoteModal()" class="btn-cancel">İptal</button>
+                            <button onclick="saveNote()" class="btn-save">Ekle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="taskModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>✅ Yeni Görev Ekle</h3>
+                        <div class="form-group">
+                            <label>Yapılacak Görev:</label>
+                            <input type="text" id="newTaskText" placeholder="Örn: Raporu tamamla">
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="closeTaskModal()" class="btn-cancel">İptal</button>
+                            <button onclick="saveTask()" class="btn-save">Ekle</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai-tools" class="page">
+                <header class="section-header">
+                    <div class="category-tabs">
+                        <button class="cat-btn active" onclick="filterAITools('all')">Tümü</button>
+                        <button class="cat-btn" onclick="filterAITools('general')"> Genel</button>
+                        <button class="cat-btn" onclick="filterAITools('chat')"> Chat</button>
+                        <button class="cat-btn" onclick="filterAITools('code')"> Kod</button>
+                        <button class="cat-btn" onclick="filterAITools('image')"> Görsel</button>
+                        <button class="cat-btn" onclick="filterAITools('cyber')"> Siber</button>
+                        <button class="cat-btn" onclick="filterAITools('audio')"> Ses</button>
+                        <button class="cat-btn" onclick="filterAITools('lesson')"> Ders</button>
+                    </div>
+
+                    <button onclick="openAIModal()" class="btn-add" title="Yeni AI Aracı Ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </header>
+
+                <div class="ai-grid" id="aiToolsContainer"></div>
+
+                <div id="aiModal" class="modal-overlay">
+                    <div class="modal-content modal-content-scrollable">
+                        <div class="modal-header">
+                            <h3>Yeni Yapay Zeka Ekle</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ai-modal-form">
+                                <div class="form-group ai-form-name">
+                                    <label>Araç Adı:</label>
+                                    <input type="text" id="aiName" placeholder="Örn: Midjourney">
+                                </div>
+                                <div class="form-group ai-form-desc">
+                                    <label>Açıklama:</label>
+                                    <input type="text" id="aiDesc" placeholder="Ne işe yarar?">
+                                </div>
+                                <div class="form-group ai-form-categories">
+                                    <label>Kategoriler (Birden fazla seçilebilir):</label>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" value="general"> Genel</label>
+                                        <label><input type="checkbox" value="chat"> Chat</label>
+                                        <label><input type="checkbox" value="code"> Kod</label>
+                                        <label><input type="checkbox" value="image"> Görsel</label>
+                                        <label><input type="checkbox" value="cyber"> Güvenlik</label>
+                                        <label><input type="checkbox" value="audio"> Ses</label>
+                                        <label><input type="checkbox" value="lesson"> Ders</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ai-form-link">
+                                    <label>Link (URL):</label>
+                                    <input type="text" id="aiLink" placeholder="https://...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-buttons">
+                                <button onclick="deleteCurrentAI()" id="btnDeleteAI" class="btn-delete btn-modal-left">
+                                    <i class="fas fa-trash"></i> Sil
+                                </button>
+                                <button onclick="closeAIModal()" class="btn-cancel">İptal</button>
+                                <button onclick="saveAI()" class="btn-save">Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ctf" class="page">
+                <header class="section-header">
+                    <div class="category-tabs">
+                        <button class="cat-btn active" onclick="filterTools('all')">Tümü</button>
+                        <button class="cat-btn" onclick="filterTools('web')">Web</button>
+                        <button class="cat-btn" onclick="filterTools('reversing')">Reversing</button>
+                        <button class="cat-btn" onclick="filterTools('osint')">OSINT</button>
+                        <button class="cat-btn" onclick="filterTools('forensic')">Forensic</button>
+                        <button class="cat-btn" onclick="filterTools('stego')">Steno</button>
+                        <button class="cat-btn" onclick="filterTools('crypto')">Kripto</button>
+                        <button class="cat-btn" onclick="filterTools('genel')">Genel</button>
+                    </div>
+                    <button onclick="openToolModal()" class="btn-add" title="Yeni Tool Ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </header>
+
+                <div class="tools-grid" id="toolsContainer"></div>
+
+                <div id="toolModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>Yeni Araç Ekle</h3>
+                        <div class="form-group">
+                            <label>Tool Adı:</label>
+                            <input type="text" id="toolName">
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori:</label>
+                            <select id="toolCategory">
+                                <option value="web">Web</option>
+                                <option value="reversing">Reversing</option>
+                                <option value="osint">OSINT</option>
+                                <option value="forensic">Forensic</option>
+                                <option value="stego">Stenografi</option>
+                                <option value="crypto">Kriptoloji</option>
+                                <option value="genel">Genel</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama:</label>
+                            <textarea id="toolDesc" rows="3" placeholder="Ne işe yarar?"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Link (URL):</label>
+                            <input type="text" id="toolLink" placeholder="https://...">
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="deleteCurrentTool()" id="btnDeleteTool" class="btn-delete btn-modal-left">
+                                <i class="fas fa-trash"></i> Sil
+                            </button>
+                            <button onclick="closeToolModal()" class="btn-cancel">İptal</button>
+                            <button onclick="saveTool()" class="btn-save">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="page">
+                <div class="projects-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="projectSearch" placeholder="Proje ara..." onkeyup="searchProjects()">
+                    </div>
+                    <button onclick="openNewProjectModal()" class="btn-add" title="Yeni Proje">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="projects-list" id="projectsContainer"></div>
+
+                <div id="projectDetailModal" class="modal-overlay full-screen-modal">
+                    <div class="modal-content project-manager-content">
+                        <div class="pm-header">
+                            <div class="pm-title-group">
+                                <input type="text" id="pmTitleInput" class="pm-input-title" placeholder="Proje Adı">
+                                <select id="pmStatusInput" class="pm-input-status">
+                                    <option value="fikir">🟣 Fikir</option>
+                                    <option value="devam">🟡 Devam Ediyor</option>
+                                    <option value="bitti">🟢 Tamamlandı</option>
+                                    <option value="iptal">🔴 Durduruldu</option>
+                                </select>
+                            </div>
+                            <div class="pm-actions">
+                                <button onclick="deleteCurrentProject()" class="btn-delete-project" title="Projeyi Sil">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button onclick="closeProjectDetail()" class="btn-close-pm" title="Kapat">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="pm-body">
+                            <div class="pm-column notes-column">
+                                <h3><i class="fas fa-align-left"></i> Proje Notları</h3>
+                                <textarea id="pmNotes" placeholder="Proje ile ilgili notlarını, fikirlerini ve detayları buraya yaz..."></textarea>
+                            </div>
+                            <div class="pm-column tasks-column">
+                                <h3><i class="fas fa-tasks"></i> Yapılacaklar Listesi</h3>
+                                <div class="pm-task-input">
+                                    <input type="text" id="pmNewTask" placeholder="Yeni görev ekle..." onkeypress="handleTaskEnter(event)">
+                                    <button onclick="addProjectTask()"><i class="fas fa-plus"></i></button>
+                                </div>
+                                <div class="pm-task-list" id="pmTaskList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="newProjectModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>Yeni Proje Oluştur</h3>
+                        <div class="form-group">
+                            <label>Proje Adı:</label>
+                            <input type="text" id="newProjName">
+                        </div>
+                        <div class="form-group">
+                            <label>Durum:</label>
+                            <select id="newProjStatus">
+                                <option value="fikir">🟣 Fikir Aşamasında</option>
+                                <option value="devam">🟡 Devam Ediyor</option>
+                                <option value="bitti">🟢 Tamamlandı</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Kısa Açıklama (Özet):</label>
+                            <input type="text" id="newProjDesc" placeholder="Kart üzerinde görünecek kısa yazı">
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="closeNewProjectModal()" class="btn-cancel">İptal</button>
+                            <button onclick="createNewProject()" class="btn-save">Oluştur</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="passwords" class="page">
+                <header class="section-header">
+                    <div class="search-box search-box-flex">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="passwordSearch" placeholder="Hesap ara..." onkeyup="searchPasswords()">
+                    </div>
+                    <button onclick="openPasswordModal()" class="btn-add" title="Yeni Şifre Ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </header>
+
+                <div class="tools-grid" id="passwordsContainer"></div>
+
+                <div id="passwordModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>Şifre Kaydet</h3>
+                        <div class="form-group">
+                            <label>Hesap/Platform:</label>
+                            <input type="text" id="passTitle" placeholder="Örn: Instagram, Gmail">
+                        </div>
+                        <div class="form-group">
+                            <label>Kullanıcı Adı / E-posta:</label>
+                            <input type="text" id="passUser">
+                        </div>
+                        <div class="form-group">
+                            <label>Şifre:</label>
+                            <div class="password-input-row">
+                                <input type="password" id="passValue" class="password-input-field" placeholder="Şifre girin veya oluşturun">
+                                <button type="button" onclick="generateSecurePassword()" class="btn-icon-small btn-password-action btn-generate" title="Güvenli Şifre Oluştur">
+                                    <i class="fas fa-magic"></i>
+                                </button>
+                                <button type="button" onclick="togglePassVisibility()" class="btn-icon-small btn-password-action" title="Göster/Gizle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="deleteCurrentPassword()" id="btnDeletePass" class="btn-delete btn-modal-left">
+                                <i class="fas fa-trash"></i> Sil
+                            </button>
+                            <button onclick="closePasswordModal()" class="btn-cancel">İptal</button>
+                            <button onclick="savePassword()" class="btn-save">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="agenda" class="page">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div class="cal-nav-group">
+                            <button onclick="changeDate(-1)" class="cal-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                            <h2 id="calendarTitle">Ocak 2026</h2>
+                            <button onclick="changeDate(1)" class="cal-nav-btn"><i class="fas fa-chevron-right"></i></button>
+                            <button onclick="goToday()" class="cal-today-btn">Bugün</button>
+                        </div>
+                        <div class="cal-view-group">
+                            <button class="cal-view-btn active" id="viewMonthBtn" onclick="setCalendarView('month')">Ay</button>
+                            <button class="cal-view-btn" id="viewYearBtn" onclick="setCalendarView('year')">Yıl</button>
+                        </div>
+                    </div>
+
+                    <div id="monthViewContainer" class="month-view-container">
+                        <div class="calendar-grid-header">
+                            <div>Pzt</div><div>Sal</div><div>Çar</div><div>Per</div><div>Cum</div><div>Cmt</div><div>Paz</div>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid"></div>
+                    </div>
+
+                    <div id="yearViewContainer" class="year-grid year-view-hidden"></div>
+                </div>
+
+                <div id="eventModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>Etkinlik Ekle / Düzenle</h3>
+                        <div class="form-group">
+                            <label>Tarih:</label>
+                            <input type="date" id="eventDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Başlık:</label>
+                            <input type="text" id="eventTitle" placeholder="Örn: Proje Teslimi">
+                        </div>
+                        <div class="form-group">
+                            <label>Tür:</label>
+                            <select id="eventType">
+                                <option value="deadline">🔴 İş / Deadline</option>
+                                <option value="personal">🔵 Şahsi / Özel</option>
+                            </select>
+                        </div>
+                        <div class="form-group event-completed-row">
+                            <label class="event-completed-label" for="eventCompleted">
+                                <input type="checkbox" id="eventCompleted" class="event-completed-checkbox">
+                                <span class="event-completed-text">Tamamlandı olarak işaretle</span>
+                            </label>
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="deleteCurrentEvent()" id="btnDeleteEvent" class="btn-delete btn-modal-left btn-delete-event">
+                                <i class="fas fa-trash"></i> Sil
+                            </button>
+                            <button onclick="closeEventModal()" class="btn-cancel">İptal</button>
+                            <button onclick="saveEvent()" class="btn-save">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="websites" class="page">
+                <header class="section-header">
+                    <div class="category-tabs">
+                        <button class="cat-btn active" onclick="filterWebsites('all')">Tümü</button>
+                        <button class="cat-btn" onclick="filterWebsites('news')"> Haber</button>
+                        <button class="cat-btn" onclick="filterWebsites('tech')"> Teknoloji</button>
+                        <button class="cat-btn" onclick="filterWebsites('siber')"> Siber</button>
+                        <button class="cat-btn" onclick="filterWebsites('dev')"> Yazılım</button>
+                        <button class="cat-btn" onclick="filterWebsites('design')"> Tasarım</button>
+                        <button class="cat-btn" onclick="filterWebsites('other')"> Diğer</button>
+                    </div>
+                    <button onclick="openWebsiteModal()" class="btn-add" title="Yeni Site Ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </header>
+
+                <div class="tools-grid" id="websitesContainer"></div>
+
+                <div id="websiteModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>Yeni Web Sitesi Ekle</h3>
+                        <div class="form-group">
+                            <label>Site Adı:</label>
+                            <input type="text" id="webName" placeholder="Örn: Hacker News">
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori:</label>
+                            <select id="webCategory">
+                                <option value="news"> Haber / Okuma</option>
+                                <option value="tech"> Teknoloji</option>
+                                <option value="siber"> Siber</option>
+                                <option value="dev"> Yazılım</option>
+                                <option value="design"> Tasarım</option>
+                                <option value="other"> Diğer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama (Opsiyonel):</label>
+                            <input type="text" id="webDesc" placeholder="Ne için kullanıyorsun?">
+                        </div>
+                        <div class="form-group">
+                            <label>Link (URL):</label>
+                            <input type="text" id="webLink" placeholder="https://...">
+                        </div>
+                        <div class="modal-buttons">
+                            <button onclick="deleteCurrentWebsite()" id="btnDeleteWeb" class="btn-delete btn-modal-left">
+                                <i class="fas fa-trash"></i> Sil
+                            </button>
+                            <button onclick="closeWebsiteModal()" class="btn-cancel">İptal</button>
+                            <button onclick="saveWebsite()" class="btn-save">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="settingsModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>⚙️ Ayarlar & Veri Yönetimi</h3>
+            <div class="form-group">
+                <p class="settings-description">
+                    Verilerini yedekle veya yedeği geri yükle. <br>
+                    <b class="settings-warning-text">Dikkat:</b> Yedek yüklediğinde mevcut verilerin silinir ve yedeğin üzerine yazılır.
+                </p>
+                <div class="settings-buttons-stack">
+                    <button onclick="exportData()" class="btn-save btn-export">
+                        <i class="fas fa-download"></i> Yedeği İndir (.json)
+                    </button>
+                    <button onclick="triggerImport()" class="btn-save btn-import">
+                        <i class="fas fa-upload"></i> Yedeği Yükle
+                    </button>
+                    <input type="file" id="importFile" class="input-hidden" onchange="importData(this)">
+                </div>
+            </div>
+            <div class="form-group settings-danger-zone">
+                <label class="settings-danger-label">⚠️ Tehlikeli Bölge</label>
+                <button onclick="clearAllData()" class="btn-delete btn-full-width">
+                    <i class="fas fa-trash-alt"></i> Tüm Verileri Sıfırla (Format)
+                </button>
+            </div>
+            <div class="modal-buttons">
+                <button onclick="closeSettingsModal()" class="btn-cancel">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
