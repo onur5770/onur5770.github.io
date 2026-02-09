@@ -1050,42 +1050,42 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 .page .tool-card, .page .project-card, .page .stat-card, .page .widget-card { box-shadow: var(--shadow-card); }
 
 /* --- ORTAK KART RENKLENDİRME (CTF) --- */
-.project-card[data-cat="web"] { border-left-color: #3b82f6 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.06) 100%) !important; }
-.project-card[data-cat="reversing"] { border-left-color: #ef4444 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(239, 68, 68, 0.06) 100%) !important; }
-.project-card[data-cat="osint"] { border-left-color: #10b981 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.06) 100%) !important; }
-.project-card[data-cat="forensic"] { border-left-color: #f59e0b !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(245, 158, 11, 0.06) 100%) !important; }
-.project-card[data-cat="stego"] { border-left-color: #8b5cf6 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(139, 92, 246, 0.06) 100%) !important; }
-.project-card[data-cat="crypto"] { border-left-color: #ec4899 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(236, 72, 153, 0.06) 100%) !important; }
-.project-card[data-cat="genel"] { border-left-color: #6b7280 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(107, 114, 128, 0.06) 100%) !important; }
+.project-card[data-cat="web"] { border-left-color: #3b82f6 !important; }
+.project-card[data-cat="reversing"] { border-left-color: #ef4444 !important; }
+.project-card[data-cat="osint"] { border-left-color: #10b981 !important; }
+.project-card[data-cat="forensic"] { border-left-color: #f59e0b !important;}
+.project-card[data-cat="stego"] { border-left-color: #8b5cf6 !important; }
+.project-card[data-cat="crypto"] { border-left-color: #ec4899 !important; }
+.project-card[data-cat="genel"] { border-left-color: #6b7280 !important; }
 
 /* --- AI TOOLS & WEBSITES: category soft background + border --- */
 #aiToolsContainer .project-card[data-cat="general"],
-.project-card[data-cat="general"] { border-left-color: #6366f1 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(99, 102, 241, 0.08) 100%) !important; }
+.project-card[data-cat="general"] { border-left-color: #6366f1 !important; }
 #aiToolsContainer .project-card[data-cat="chat"],
-.project-card[data-cat="chat"] { border-left-color: #3b82f6 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%) !important; }
+.project-card[data-cat="chat"] { border-left-color: #3b82f6 !important; }
 #aiToolsContainer .project-card[data-cat="code"],
-.project-card[data-cat="code"] { border-left-color: #10b981 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.08) 100%) !important; }
+.project-card[data-cat="code"] { border-left-color: #10b981 !important; }
 #aiToolsContainer .project-card[data-cat="image"],
-.project-card[data-cat="image"] { border-left-color: #8b5cf6 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(139, 92, 246, 0.08) 100%) !important; }
+.project-card[data-cat="image"] { border-left-color: #8b5cf6 !important; }
 #aiToolsContainer .project-card[data-cat="cyber"],
-.project-card[data-cat="cyber"] { border-left-color: #ef4444 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(239, 68, 68, 0.08) 100%) !important; }
+.project-card[data-cat="cyber"] { border-left-color: #ef4444 !important;}
 #aiToolsContainer .project-card[data-cat="audio"],
-.project-card[data-cat="audio"] { border-left-color: #f59e0b !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(245, 158, 11, 0.08) 100%) !important; }
+.project-card[data-cat="audio"] { border-left-color: #f59e0b !important;}
 #aiToolsContainer .project-card[data-cat="lesson"],
-.project-card[data-cat="lesson"] { border-left-color: #06b6d4 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(6, 182, 212, 0.08) 100%) !important; }
+.project-card[data-cat="lesson"] { border-left-color: #06b6d4 !important; }
 
 #websitesContainer .project-card[data-cat="news"],
-.project-card[data-cat="news"] { border-left-color: #3b82f6 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%) !important; }
+.project-card[data-cat="news"] { border-left-color: #3b82f6 !important;}
 #websitesContainer .project-card[data-cat="tech"],
-.project-card[data-cat="tech"] { border-left-color: #64748b !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(100, 116, 139, 0.08) 100%) !important; }
+.project-card[data-cat="tech"] { border-left-color: #64748b !important;}
 #websitesContainer .project-card[data-cat="siber"],
-.project-card[data-cat="siber"] { border-left-color: #ef4444 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(239, 68, 68, 0.08) 100%) !important; }
+.project-card[data-cat="siber"] { border-left-color: #ef4444 !important;}
 #websitesContainer .project-card[data-cat="dev"],
-.project-card[data-cat="dev"] { border-left-color: #10b981 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.08) 100%) !important; }
+.project-card[data-cat="dev"] { border-left-color: #10b981 !important; }
 #websitesContainer .project-card[data-cat="design"],
-.project-card[data-cat="design"] { border-left-color: #ec4899 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(236, 72, 153, 0.08) 100%) !important; }
+.project-card[data-cat="design"] { border-left-color: #ec4899 !important;}
 #websitesContainer .project-card[data-cat="other"],
-.project-card[data-cat="other"] { border-left-color: #94a3b8 !important; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(148, 163, 184, 0.06) 100%) !important; }
+.project-card[data-cat="other"] { border-left-color: #94a3b8 !important;}
 
 .project-card:hover { border-left-color: var(--accent-color) !important; }
 
