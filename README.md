@@ -1,6 +1,6 @@
 # Kişisel Asistan 
 
-**RootPanel**, modern bir siber güvenlik meraklısının veya yazılımcının günlük ihtiyaçlarını tek bir noktadan yönetmesi için tasarlanmış, **premium** arayüze sahip bir kişisel dashboard projesidir. Glassmorphism tasarımı ve zengin modülleri ile hem estetik hem de işlevsellik sunar.
+**RootPanel**, modern bir siber güvenlik meraklısının veya yazılımcının günlük ihtiyaçlarını tek bir noktadan yönetmesi için tasarlanmış, **premium** arayüze sahip bir kişisel dashboard projesidir. Şimdilik ilk versiyon ile sizlere sunduğum bu projeyi zamanla daha da geliştireceğim.
 
 ## ✨ Öne Çıkan Özellikler
 
