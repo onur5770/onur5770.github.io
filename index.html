@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
 </head>
 <body>
     <div id="toast-container" class="toast-container" aria-live="polite" aria-label="Bildirimler"></div>
@@ -582,6 +581,20 @@
         </main>
     </div>
 
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal-content modal-confirm">
+            <div class="confirm-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 id="confirmTitle">Emin misin?</h3>
+            <p id="confirmMessage">Bu işlem geri alınamaz!</p>
+            <div class="modal-buttons">
+                <button onclick="cancelConfirm()" class="btn-cancel">İptal</button>
+                <button onclick="acceptConfirm()" class="btn-delete" id="confirmBtn">Evet, Sil</button>
+            </div>
+        </div>
+    </div>
+
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
             <h3>⚙️ Ayarlar & Veri Yönetimi</h3>
@@ -608,6 +621,20 @@
             </div>
             <div class="modal-buttons">
                 <button onclick="closeSettingsModal()" class="btn-cancel">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal-content confirm-modal-content">
+            <div class="confirm-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 id="confirmTitle">Emin misin?</h3>
+            <p id="confirmMessage" class="confirm-message">Bu işlem geri alınamaz.</p>
+            <div class="modal-buttons">
+                <button onclick="cancelConfirm()" class="btn-cancel">İptal</button>
+                <button onclick="acceptConfirm()" id="confirmBtn" class="btn-delete">Evet, Sil</button>
             </div>
         </div>
     </div>
