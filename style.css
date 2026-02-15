@@ -43,10 +43,8 @@ body.dark-mode {
     --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
-/* --- TEMEL --- */
 * { box-sizing: border-box; }
 
-/* Focus visible for accessibility (keyboard users); outline removed only for mouse */
 *:focus { outline: none; }
 *:focus-visible {
     outline: 2px solid var(--accent-color);
@@ -64,7 +62,6 @@ body {
 
 .app-container { display: flex; height: 100vh; overflow: hidden; }
 
-/* --- SIDEBAR (Glassmorphism) --- */
 .sidebar {
     width: 260px;
     background: var(--sidebar-bg);
@@ -116,7 +113,6 @@ body {
 .theme-btn:hover { color: var(--accent-color); transform: scale(1.05); }
 .theme-btn:focus-visible { color: var(--accent-color); }
 
-/* --- MAIN --- */
 .main-content { flex: 1; padding: 32px 40px; overflow-y: auto; line-height: 1.6; }
 header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
 header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
@@ -125,7 +121,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .active-page { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* --- ISTATISTIKLER --- */
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 32px; }
 .stat-card {
     background: var(--card-bg);
@@ -145,7 +140,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .info h3 { margin: 0; font-size: 14px; color: var(--text-secondary); font-weight: 500; }
 .info p { margin: 6px 0 0 0; font-size: 18px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
 
-/* --- WIDGETLAR --- */
 .dashboard-widgets { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; }
 .widget-card {
     background: var(--card-bg);
@@ -183,7 +177,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .month-view-container { display: flex; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }
 .year-view-hidden { display: none; }
 
-/* Agenda: Tamamlandı checkbox — aligned, modern */
 .event-completed-row { margin-bottom: 0; }
 .event-completed-label {
     display: flex;
@@ -225,7 +218,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .settings-danger-label { color: #ef4444; font-weight: 700; display: block; margin-bottom: 10px; }
 .btn-full-width { width: 100%; justify-content: center; }
 
-/* --- PASSWORD CARDS (no overlap) --- */
 .password-card-body {
     flex: 1;
     min-height: 0;
@@ -264,7 +256,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 
 #passwordsContainer .project-card { height: auto; min-height: 180px; }
 
-/* --- HIZLI ERIŞIM --- */
 .quick-links { display: flex; gap: 12px; flex-wrap: wrap; }
 .link-item {
     background: var(--card-bg);
@@ -289,7 +280,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .quick-links.editing .delete-link-btn { display: flex; }
 @keyframes gentleShake { from { transform: rotate(-1deg); } to { transform: rotate(1deg); } }
 
-/* --- KRONOMETRE --- */
 .timer-display { font-size: 48px; font-weight: 700; text-align: center; margin: 24px 0; font-family: 'Courier New', monospace; letter-spacing: 2px; color: var(--text-primary); line-height: 1.2; }
 .timer-controls { display: flex; justify-content: center; gap: 12px; }
 .btn-small {
@@ -310,7 +300,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .btn-small.stop { background: #f59e0b; color: white; }
 .btn-small.reset { background: var(--button-bg); color: var(--text-secondary); }
 
-/* --- PANOM & GÖREVLER (ALT) --- */
 .dashboard-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
 .content-widget {
     background: var(--card-bg);
@@ -327,7 +316,6 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .count-badge { background: var(--button-bg); padding: 4px 10px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; color: var(--text-secondary); box-shadow: var(--shadow-soft); }
 .empty-state { color: var(--text-secondary); font-size: 14px; text-align: center; margin-top: 48px; font-style: italic; opacity: 0.8; line-height: 1.5; }
 
-/* Notlar */
 .notes-list { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
 .dashboard-note {
     background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
@@ -346,7 +334,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 .delete-note-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: inherit; opacity: 0.5; cursor: pointer; font-size: 12px; transition: var(--transition); }
 .delete-note-btn:hover { opacity: 1; color: #ef4444; }
 
-/* Görevler */
 .tasks-list { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
 .dashboard-task {
     display: flex;
@@ -367,7 +354,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 .dashboard-task:hover .delete-task-btn { opacity: 1; }
 .delete-task-btn:hover { color: #ef4444; }
 
-/* --- CTF HEADER & TOOLS --- */
 .section-header {
     background: var(--card-bg);
     padding: 24px 28px;
@@ -419,7 +405,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 
 .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; padding-bottom: 40px; }
 
-/* --- TOOL CARD YAPISI --- */
 .tool-card {
     background: var(--card-bg);
     border-left: 4px solid #94a3b8;
@@ -441,7 +426,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 
 .tool-card::before { display: none !important; }
 
-/* --- ETİKET TASARIMI --- */
 .tool-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
 .tool-card .tool-tag {
     font-size: 10px;
@@ -484,7 +468,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 
 .btn-edit-tool:hover { color: var(--accent-color); transform: scale(1.08); }
 
-/* --- MODAL ORTAK --- */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -511,10 +494,72 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
     gap: 20px;
 }
 
+.modal-confirm {
+    width: 420px !important;
+    text-align: center;
+    animation: modalBounce 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    align-items: center;
+}
+
+.confirm-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: rgba(239, 68, 68, 0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: #ef4444;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes modalBounce {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.modal-confirm h3 {
+    font-size: 22px;
+    margin: 0 0 10px 0;
+    color: var(--text-primary);
+    text-align: center;
+    justify-content: center;
+}
+
+.modal-confirm p {
+    margin: 0 0 24px 0;
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.modal-confirm .modal-buttons {
+    justify-content: center;
+    gap: 16px;
+}
+
+.modal-confirm .btn-cancel,
+.modal-confirm .btn-delete {
+    min-width: 120px;
+}
+
+#confirmModal {
+    z-index: 10000 !important;
+}
+
 .modal-content h3 { margin: 0; font-size: 20px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 10px; line-height: 1.3; }
 .form-group { margin-bottom: 18px; }
 
-/* --- AI MODAL: scrollable, sticky header/footer, two-column, compact --- */
 #aiModal .modal-content.modal-content-scrollable {
     max-height: 85vh;
     padding: 0 !important;
@@ -573,7 +618,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
     margin-top: 0;
 }
 
-/* AI modal: compact checkbox group */
 #aiModal .modal-body .checkbox-group {
     margin-top: 8px !important;
     padding: 12px !important;
@@ -660,7 +704,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 .btn-delete:hover { background: #ef4444; color: white; transform: translateY(-1px); }
 .btn-delete:focus-visible { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); }
 
-/* --- PROJELER SAYFASI --- */
 .projects-header { display: flex; gap: 18px; margin-bottom: 28px; }
 .search-box {
     flex: 1;
@@ -701,7 +744,6 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 .project-card p { font-size: 13px; color: var(--text-secondary); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .project-meta { margin-top: auto; font-size: 11px; color: var(--text-secondary); opacity: 0.7; display: flex; justify-content: space-between; }
 
-/* --- PROJE DETAY MODALI (FULL REPAIR) --- */
 .full-screen-modal .modal-content.project-manager-content {
     width: min(950px, 95vw) !important;
     height: min(700px, 85vh) !important;
@@ -812,10 +854,8 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 }
 .btn-delete-project:hover { background: #ef4444; color: white; }
 
-/* --- AI TOOLS VE WEB SİTELERİ --- */
 .ai-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding-bottom: 40px; }
 
-/* --- KATEGORİ SEÇİCİ (AI modal) & CHECKBOX STYLING --- */
 .checkbox-group,
 .form-group.checkbox-group {
     background: var(--button-bg) !important;
@@ -876,7 +916,6 @@ input[type="checkbox"] {
     flex-shrink: 0;
 }
 
-/* --- AJANDA (TAKVİM) STİLİ --- */
 .calendar-container {
     background: var(--card-bg);
     border-radius: var(--radius-lg);
@@ -936,7 +975,6 @@ input[type="checkbox"] {
 .cal-event-personal { background: var(--cal-personal); }
 .cal-event-completed { background: var(--cal-completed); text-decoration: line-through; opacity: 0.7; }
 
-/* Year view grid */
 .year-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 24px; overflow-y: auto; }
 .mini-month-card { background: var(--button-bg); border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-soft); }
 .mini-month-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; text-align: center; }
@@ -949,7 +987,6 @@ input[type="checkbox"] {
 .event-dots .dot.deadline { background: var(--cal-deadline); }
 .event-dots .dot.personal { background: var(--cal-personal); }
 
-/* --- ÖZEL RENKLENDİRME (KART KENARLIKLARI) --- */
 .tool-card[data-cat="web"] { border-left-color: #3b82f6 !important; }
 .tool-card[data-cat="reversing"] { border-left-color: #ef4444 !important; }
 .tool-card[data-cat="osint"] { border-left-color: #10b981 !important; }
@@ -958,7 +995,6 @@ input[type="checkbox"] {
 .tool-card[data-cat="crypto"] { border-left-color: #ec4899 !important; }
 .tool-card[data-cat="genel"] { border-left-color: #6b7280 !important; }
 
-/* --- ETİKET (TAG) STANDARDİZASYONU --- */
 .tool-tag, .ai-tag { 
     font-family: 'Inter', sans-serif !important; font-size: 11px !important; font-weight: 700 !important; 
     text-transform: uppercase !important; letter-spacing: 0.5px !important; padding: 4px 8px !important; 
@@ -966,7 +1002,6 @@ input[type="checkbox"] {
 }
 body.dark-mode .tool-tag, body.dark-mode .ai-tag { background: rgba(255, 255, 255, 0.1) !important; color: #d1d5db !important; }
 
-/* --- TOAST NOTIFICATION SYSTEM (glassmorphism, theme-matched) --- */
 .toast-container {
     position: fixed;
     top: 24px;
@@ -1046,10 +1081,106 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
     to { opacity: 0; transform: translateX(100%); }
 }
 
-/* --- GLOBAL KART (use design tokens; no flat reset) --- */
+/* Modern Confirm Toast */
+.toast.confirm-toast {
+    background: var(--card-bg);
+    border-left: 4px solid #f59e0b;
+    min-width: 320px;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.toast.confirm-toast .toast-content {
+    width: 100%;
+}
+
+.toast.confirm-toast .toast-icon {
+    color: #f59e0b;
+}
+
+.toast-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.toast-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toast-btn-cancel {
+    background: var(--button-bg);
+    color: var(--text-primary);
+}
+
+.toast-btn-cancel:hover {
+    background: var(--hover-bg);
+}
+
+.toast-btn-confirm {
+    background: #ef4444;
+    color: white;
+}
+
+.toast-btn-confirm:hover {
+    background: #dc2626;
+    transform: scale(1.02);
+}
+
+/* Modern Confirm Modal */
+.confirm-modal-content {
+    max-width: 420px;
+    text-align: center;
+}
+
+.confirm-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    background: rgba(249, 115, 22, 0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-icon i {
+    font-size: 28px;
+    color: #f59e0b;
+}
+
+.confirm-modal-content h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.confirm-message {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.confirm-modal-content .modal-buttons {
+    justify-content: center;
+    gap: 12px;
+}
+
+.confirm-modal-content .btn-cancel,
+.confirm-modal-content .btn-delete {
+    min-width: 120px;
+}
+
 .page .tool-card, .page .project-card, .page .stat-card, .page .widget-card { box-shadow: var(--shadow-card); }
 
-/* --- ORTAK KART RENKLENDİRME (CTF) --- */
 .project-card[data-cat="web"] { border-left-color: #3b82f6 !important; }
 .project-card[data-cat="reversing"] { border-left-color: #ef4444 !important; }
 .project-card[data-cat="osint"] { border-left-color: #10b981 !important; }
@@ -1058,7 +1189,6 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 .project-card[data-cat="crypto"] { border-left-color: #ec4899 !important; }
 .project-card[data-cat="genel"] { border-left-color: #6b7280 !important; }
 
-/* --- AI TOOLS & WEBSITES: category soft background + border --- */
 #aiToolsContainer .project-card[data-cat="general"],
 .project-card[data-cat="general"] { border-left-color: #6366f1 !important; }
 #aiToolsContainer .project-card[data-cat="chat"],
@@ -1089,99 +1219,120 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 
 .project-card:hover { border-left-color: var(--accent-color) !important; }
 
-/* ========== RESPONSIVE LAYOUT ========== */
-@media (max-width: 1024px) {
-    .app-container { flex-direction: column; }
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
     .sidebar {
         width: 100%;
+        height: auto;
+        padding: 12px 16px;
         flex-direction: row;
-        flex-wrap: wrap;
-        padding: 16px 20px;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
-        gap: 14px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
     }
-    .logo { margin-bottom: 0; flex: 1; min-width: 0; }
-    .menu { order: 3; width: 100%; }
-    .menu ul { display: flex; flex-wrap: wrap; gap: 4px; }
-    .menu li { margin-bottom: 0; padding: 8px 12px; font-size: 13px; }
-    .user-profile { margin-top: 0; padding-top: 0; border-top: none; order: 2; }
-    .main-content { padding: 20px 16px; }
-    header { margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
-    header h2 { font-size: 20px; }
-    .dashboard-widgets { grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
-    .dashboard-content-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
-    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
-    .section-header { padding: 16px; flex-direction: column; align-items: stretch; gap: 12px; }
-    .category-tabs { margin-right: 0; padding-bottom: 4px; }
-    .tools-grid, .ai-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; padding-bottom: 24px; }
-    .projects-list { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-    .projects-header { flex-wrap: wrap; }
-    .search-box { min-width: 0; }
-    .calendar-container { height: calc(100vh - 140px); }
-    .calendar-header { flex-wrap: wrap; gap: 12px; padding: 12px 16px; }
-    .cal-nav-group h2 { min-width: 120px; font-size: 18px; }
-    .modal-content { width: 92%; max-width: none; padding: 20px; }
-    #aiModal .modal-content.modal-content-scrollable {
-        width: 94% !important;
-        max-height: 90vh !important;
-    }
-    #aiModal .ai-modal-form { grid-template-columns: 1fr; }
-    #aiModal .ai-form-name,
-    #aiModal .ai-form-desc { grid-column: 1; }
-}
 
-@media (max-width: 768px) {
-    .sidebar { padding: 10px 12px; }
-    .menu li { padding: 6px 10px; font-size: 12px; }
-    .main-content { padding: 16px 12px; }
-    header h2 { font-size: 18px; }
-    .date-display { font-size: 13px; }
-    .stat-card { padding: 14px; }
-    .icon-box { width: 40px; height: 40px; font-size: 16px; }
-    .info p { font-size: 16px; }
-    .widget-card { padding: 16px; }
-    .widget-header h3 { font-size: 15px; }
-    .timer-display { font-size: 36px; }
-    .content-widget { min-height: 220px; padding: 16px; }
-    .section-header { padding: 12px; }
-    .cat-btn { padding: 6px 12px; font-size: 12px; }
-    .btn-add { width: 40px; height: 40px; font-size: 18px; }
-    .tools-grid, .ai-grid { grid-template-columns: 1fr; gap: 12px; }
-    .projects-list { grid-template-columns: 1fr; }
-    .project-card { height: auto; min-height: 120px; }
-    .tool-card { height: auto; min-height: 140px; }
-    .full-screen-modal .modal-content.project-manager-content {
-        width: 98% !important;
-        height: 90vh !important;
+    .logo {
+        margin-bottom: 0;
+        font-size: 18px;
     }
-    .pm-header { flex-wrap: wrap; }
-    .pm-title-group { flex-wrap: wrap; }
-    .pm-body { flex-direction: column !important; gap: 16px !important; }
-    .calendar-header { flex-direction: column; align-items: stretch; }
-    .cal-nav-group { justify-content: space-between; }
-    .cal-view-group { align-self: center; }
-    .toast-container { left: 12px; right: 12px; top: 12px; max-width: none; }
-    .toast { min-width: 0; padding: 12px 14px 12px 16px; font-size: 13px; }
-    .year-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
-}
 
-@media (max-width: 480px) {
-    .logo { font-size: 17px; }
-    .menu ul { flex-direction: column; }
-    .stats-grid { grid-template-columns: 1fr; }
-    .modal-content { padding: 16px; border-radius: 16px; }
-    .modal-buttons { flex-direction: column; }
-    .modal-buttons .btn-modal-left { margin-right: 0; margin-bottom: 8px; }
-    .settings-buttons-stack .btn-save { padding: 12px; }
-    .year-grid { grid-template-columns: 1fr; }
-    #aiModal .modal-content.modal-content-scrollable {
-        width: 98% !important;
-        max-height: 95vh !important;
+    .menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: var(--sidebar-bg);
+        backdrop-filter: blur(15px);
+        padding: 8px 0;
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
     }
-    #aiModal .modal-header { padding: 16px 18px 12px; }
-    #aiModal .modal-body { padding: 12px 18px; }
-    #aiModal .modal-footer { padding: 12px 18px 16px; }
+
+    .menu ul {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 12px;
+        gap: 8px;
+        scrollbar-width: none;
+    }
+
+    .menu ul::-webkit-scrollbar {
+        display: none;
+    }
+
+    .menu li {
+        flex-direction: column;
+        gap: 4px;
+        padding: 10px;
+        min-width: 70px;
+        font-size: 10px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .menu li i {
+        font-size: 18px;
+    }
+
+    .main-content {
+        padding: 20px 16px 100px 16px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .tools-grid, .ai-grid, .projects-list {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+
+    .project-card, .tool-card {
+        height: auto;
+        min-height: 140px;
+        padding: 20px;
+    }
+
+    .dashboard-widgets, .dashboard-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .pm-body {
+        flex-direction: column !important;
+    }
+
+    .calendar-grid-header div {
+        font-size: 10px;
+        padding: 8px 4px;
+    }
+
+    .cal-day {
+        min-height: 70px;
+    }
+    
+    .cal-day-num {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
 }
