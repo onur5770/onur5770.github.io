@@ -21,25 +21,25 @@
             <nav class="menu">
                 <ul>
                     <li onclick="showPage('dashboard')" class="active" id="nav-dashboard">
-                        <i class="fas fa-home"></i> Genel Bakış
+                        <i class="fas fa-home"></i><span class="nav-label">Ana Sayfa</span>
                     </li>
                     <li onclick="showPage('ctf')" id="nav-ctf">
-                        <i class="fas fa-flag"></i> CTF & Tools
+                        <i class="fas fa-flag"></i><span class="nav-label">CTF</span>
                     </li>
                     <li onclick="showPage('ai-tools')" id="nav-ai-tools">
-                        <i class="fas fa-microchip"></i> Yapay Zekalar
+                        <i class="fas fa-microchip"></i><span class="nav-label">Yapay Zeka</span>
                     </li>
                     <li onclick="showPage('websites')" id="nav-websites">
-                        <i class="fas fa-globe"></i> Web Siteleri
+                        <i class="fas fa-globe"></i><span class="nav-label">Siteler</span>
                     </li>
                     <li onclick="showPage('projects')" id="nav-projects">
-                        <i class="fas fa-code-branch"></i> Projelerim
+                        <i class="fas fa-code-branch"></i><span class="nav-label">Projeler</span>
                     </li>
                     <li onclick="showPage('passwords')" id="nav-passwords">
-                        <i class="fas fa-key"></i> Şifre Yöneticisi
+                        <i class="fas fa-key"></i><span class="nav-label">Şifreler</span>
                     </li>
                     <li onclick="showPage('agenda')" id="nav-agenda">
-                        <i class="fas fa-calendar-alt"></i> Ajanda
+                        <i class="fas fa-calendar-alt"></i><span class="nav-label">Ajanda</span>
                     </li>
                 </ul>
             </nav>
@@ -64,7 +64,17 @@
             
             <header>
                 <h2 id="page-title">Genel Bakış</h2>
-                <div class="date-display" id="currentDate">Tarih Yükleniyor...</div>
+                <div class="header-right-actions">
+                    <div class="date-display" id="currentDate">Tarih Yükleniyor...</div>
+                    <div class="mobile-header-btns">
+                        <button onclick="openSettingsModal()" class="theme-btn" title="Ayarlar & Yedekleme">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button onclick="toggleTheme()" class="theme-btn" title="Tema Değiştir">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
             </header>
 
             <section id="dashboard" class="page active-page">
@@ -215,22 +225,25 @@
             </section>
 
             <section id="ai-tools" class="page">
-                <header class="section-header">
-                    <div class="category-tabs">
-                        <button class="cat-btn active" onclick="filterAITools('all')">Tümü</button>
-                        <button class="cat-btn" onclick="filterAITools('general')"> Genel</button>
-                        <button class="cat-btn" onclick="filterAITools('chat')"> Chat</button>
-                        <button class="cat-btn" onclick="filterAITools('code')"> Kod</button>
-                        <button class="cat-btn" onclick="filterAITools('image')"> Görsel</button>
-                        <button class="cat-btn" onclick="filterAITools('cyber')"> Siber</button>
-                        <button class="cat-btn" onclick="filterAITools('audio')"> Ses</button>
-                        <button class="cat-btn" onclick="filterAITools('lesson')"> Ders</button>
+                <div class="page-toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="aiSearch" placeholder="Yapay zeka ara..." onkeyup="searchAITools()">
                     </div>
-
                     <button onclick="openAIModal()" class="btn-add" title="Yeni AI Aracı Ekle">
                         <i class="fas fa-plus"></i>
                     </button>
-                </header>
+                </div>
+                <div class="category-tabs-bar">
+                    <button class="cat-btn active" onclick="filterAITools('all')">Tümü</button>
+                    <button class="cat-btn" onclick="filterAITools('general')">Genel</button>
+                    <button class="cat-btn" onclick="filterAITools('chat')">Chat</button>
+                    <button class="cat-btn" onclick="filterAITools('code')">Kod</button>
+                    <button class="cat-btn" onclick="filterAITools('image')">Görsel</button>
+                    <button class="cat-btn" onclick="filterAITools('cyber')">Siber</button>
+                    <button class="cat-btn" onclick="filterAITools('audio')">Ses</button>
+                    <button class="cat-btn" onclick="filterAITools('lesson')">Ders</button>
+                </div>
 
                 <div class="ai-grid" id="aiToolsContainer"></div>
 
@@ -281,21 +294,25 @@
             </section>
 
             <section id="ctf" class="page">
-                <header class="section-header">
-                    <div class="category-tabs">
-                        <button class="cat-btn active" onclick="filterTools('all')">Tümü</button>
-                        <button class="cat-btn" onclick="filterTools('web')">Web</button>
-                        <button class="cat-btn" onclick="filterTools('reversing')">Reversing</button>
-                        <button class="cat-btn" onclick="filterTools('osint')">OSINT</button>
-                        <button class="cat-btn" onclick="filterTools('forensic')">Forensic</button>
-                        <button class="cat-btn" onclick="filterTools('stego')">Steno</button>
-                        <button class="cat-btn" onclick="filterTools('crypto')">Kripto</button>
-                        <button class="cat-btn" onclick="filterTools('genel')">Genel</button>
+                <div class="page-toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="toolSearch" placeholder="Tool ara..." onkeyup="searchTools()">
                     </div>
                     <button onclick="openToolModal()" class="btn-add" title="Yeni Tool Ekle">
                         <i class="fas fa-plus"></i>
                     </button>
-                </header>
+                </div>
+                <div class="category-tabs-bar">
+                    <button class="cat-btn active" onclick="filterTools('all')">Tümü</button>
+                    <button class="cat-btn" onclick="filterTools('web')">Web</button>
+                    <button class="cat-btn" onclick="filterTools('reversing')">Reversing</button>
+                    <button class="cat-btn" onclick="filterTools('osint')">OSINT</button>
+                    <button class="cat-btn" onclick="filterTools('forensic')">Forensic</button>
+                    <button class="cat-btn" onclick="filterTools('stego')">Steno</button>
+                    <button class="cat-btn" onclick="filterTools('crypto')">Kripto</button>
+                    <button class="cat-btn" onclick="filterTools('genel')">Genel</button>
+                </div>
 
                 <div class="tools-grid" id="toolsContainer"></div>
 
@@ -338,7 +355,7 @@
             </section>
 
             <section id="projects" class="page">
-                <div class="projects-header">
+                <div class="page-toolbar">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
                         <input type="text" id="projectSearch" placeholder="Proje ara..." onkeyup="searchProjects()">
@@ -417,15 +434,15 @@
             </section>
 
             <section id="passwords" class="page">
-                <header class="section-header">
-                    <div class="search-box search-box-flex">
+                <div class="page-toolbar">
+                    <div class="search-box">
                         <i class="fas fa-search"></i>
                         <input type="text" id="passwordSearch" placeholder="Hesap ara..." onkeyup="searchPasswords()">
                     </div>
                     <button onclick="openPasswordModal()" class="btn-add" title="Yeni Şifre Ekle">
                         <i class="fas fa-plus"></i>
                     </button>
-                </header>
+                </div>
 
                 <div class="tools-grid" id="passwordsContainer"></div>
 
@@ -524,20 +541,24 @@
             </section>
 
             <section id="websites" class="page">
-                <header class="section-header">
-                    <div class="category-tabs">
-                        <button class="cat-btn active" onclick="filterWebsites('all')">Tümü</button>
-                        <button class="cat-btn" onclick="filterWebsites('news')"> Haber</button>
-                        <button class="cat-btn" onclick="filterWebsites('tech')"> Teknoloji</button>
-                        <button class="cat-btn" onclick="filterWebsites('siber')"> Siber</button>
-                        <button class="cat-btn" onclick="filterWebsites('dev')"> Yazılım</button>
-                        <button class="cat-btn" onclick="filterWebsites('design')"> Tasarım</button>
-                        <button class="cat-btn" onclick="filterWebsites('other')"> Diğer</button>
+                <div class="page-toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="websiteSearch" placeholder="Site ara..." onkeyup="searchWebsites()">
                     </div>
                     <button onclick="openWebsiteModal()" class="btn-add" title="Yeni Site Ekle">
                         <i class="fas fa-plus"></i>
                     </button>
-                </header>
+                </div>
+                <div class="category-tabs-bar">
+                    <button class="cat-btn active" onclick="filterWebsites('all')">Tümü</button>
+                    <button class="cat-btn" onclick="filterWebsites('news')">Haber</button>
+                    <button class="cat-btn" onclick="filterWebsites('tech')">Teknoloji</button>
+                    <button class="cat-btn" onclick="filterWebsites('siber')">Siber</button>
+                    <button class="cat-btn" onclick="filterWebsites('dev')">Yazılım</button>
+                    <button class="cat-btn" onclick="filterWebsites('design')">Tasarım</button>
+                    <button class="cat-btn" onclick="filterWebsites('other')">Diğer</button>
+                </div>
 
                 <div class="tools-grid" id="websitesContainer"></div>
 
