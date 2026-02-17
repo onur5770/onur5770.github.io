@@ -41,6 +41,19 @@ function debounce(func, wait = 300) {
     };
 }
 
+// Kategori sekme aktifliğini güncelle
+function updateCatBtns(selector, activeCategory) {
+    const container = document.querySelector(selector);
+    if (!container) return;
+    container.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('active');
+        const onclick = btn.getAttribute('onclick') || '';
+        if (onclick.includes(`'${activeCategory}'`)) {
+            btn.classList.add('active');
+        }
+    });
+}
+
 // ==========================================
 // 3. STATE MANAGEMENT
 // ==========================================
@@ -702,7 +715,23 @@ const ToolsManager = new CardManager({
 });
 
 window.renderTools = (cat) => ToolsManager.render(cat);
-window.filterTools = (cat) => ToolsManager.render(cat);
+window.filterTools = (cat) => {
+    updateCatBtns('#ctf .category-tabs-bar', cat);
+    ToolsManager.render(cat);
+};
+
+window.searchTools = function() {
+    const txt = document.getElementById('toolSearch').value.toLowerCase();
+    const container = document.getElementById('toolsContainer');
+    container.innerHTML = '';
+    const filtered = AppState.tools.filter(t =>
+        t.name.toLowerCase().includes(txt) || t.desc.toLowerCase().includes(txt)
+    );
+    filtered.forEach((tool) => {
+        const idx = AppState.tools.indexOf(tool);
+        container.appendChild(ToolsManager.renderCard(tool, idx));
+    });
+};
 
 window.editTool = function(index) {
     AppState.editing.toolIndex = index;
@@ -1074,7 +1103,23 @@ const AIToolsManager = new CardManager({
     }
 });
 
-window.filterAITools = (cat) => AIToolsManager.render(cat);
+window.filterAITools = (cat) => {
+    updateCatBtns('#ai-tools .category-tabs-bar', cat);
+    AIToolsManager.render(cat);
+};
+
+window.searchAITools = function() {
+    const txt = document.getElementById('aiSearch').value.toLowerCase();
+    const container = document.getElementById('aiToolsContainer');
+    container.innerHTML = '';
+    const filtered = AppState.aiTools.filter(t =>
+        t.name.toLowerCase().includes(txt) || t.desc.toLowerCase().includes(txt)
+    );
+    filtered.forEach((tool) => {
+        const idx = AppState.aiTools.indexOf(tool);
+        container.appendChild(AIToolsManager.renderCard(tool, idx));
+    });
+};
 
 window.editAI = function(index) {
     AppState.editing.aiIndex = index;
@@ -1228,8 +1273,24 @@ const WebsitesManager = new CardManager({
     }
 });
 
-window.filterWebsites = (cat) => WebsitesManager.render(cat);
+window.filterWebsites = (cat) => {
+    updateCatBtns('#websites .category-tabs-bar', cat);
+    WebsitesManager.render(cat);
+};
 window.renderWebsites = (cat) => WebsitesManager.render(cat);
+
+window.searchWebsites = function() {
+    const txt = document.getElementById('websiteSearch').value.toLowerCase();
+    const container = document.getElementById('websitesContainer');
+    container.innerHTML = '';
+    const filtered = AppState.websites.filter(w =>
+        w.name.toLowerCase().includes(txt) || (w.desc && w.desc.toLowerCase().includes(txt))
+    );
+    filtered.forEach((web) => {
+        const idx = AppState.websites.indexOf(web);
+        container.appendChild(WebsitesManager.renderCard(web, idx));
+    });
+};
 
 window.editWebsite = function(index) {
     AppState.editing.webIndex = index;
