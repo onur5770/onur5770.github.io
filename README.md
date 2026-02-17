@@ -25,4 +25,4 @@
 Projeyi kurulum yapmadan doğrudan tarayıcınız üzerinden kullanabilirsiniz:
 [https://onur5770.github.io/]
 
-## Henüz mobil görünüm için bir düzenleme getirmedim yakında getireceğim
+## Eklememi veya düzenlememi istediğiniz bir şey için lütfen benimle iletişime geçin
