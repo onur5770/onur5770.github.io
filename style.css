@@ -1219,11 +1219,21 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 
 .project-card:hover { border-left-color: var(--accent-color) !important; }
 
+/* ============================================
+   MOBİL GÖRÜNÜM - Kapsamlı Düzenleme
+   ============================================ */
+
 @media (max-width: 768px) {
+
+    /* --- ANA YAPI --- */
     .app-container {
         flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
     }
 
+    /* --- ÜST BAR (Logo + Tema/Ayar) --- */
     .sidebar {
         width: 100%;
         height: auto;
@@ -1236,31 +1246,38 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
         z-index: 1000;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     .logo {
         margin-bottom: 0;
-        font-size: 18px;
+        font-size: 16px;
     }
 
+    /* --- ALT NAVİGASYON ÇUBUĞU --- */
     .menu {
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
         background: var(--sidebar-bg);
-        backdrop-filter: blur(15px);
-        padding: 8px 0;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
         border-top: 1px solid var(--border-color);
-        box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+        z-index: 999;
     }
 
     .menu ul {
         display: flex;
         overflow-x: auto;
-        padding: 0 12px;
-        gap: 8px;
+        padding: 0 8px;
+        gap: 2px;
         scrollbar-width: none;
+        -ms-overflow-style: none;
+        justify-content: space-around;
     }
 
     .menu ul::-webkit-scrollbar {
@@ -1269,70 +1286,506 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 
     .menu li {
         flex-direction: column;
+        gap: 3px;
+        padding: 8px 6px;
+        min-width: 56px;
+        max-width: 72px;
+        flex: 1;
+        font-size: 9px;
+        font-weight: 600;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        letter-spacing: 0;
+    }
+
+    .menu li i {
+        font-size: 20px;
+        margin-bottom: 1px;
+    }
+
+    .menu li.active {
+        background: rgba(99, 102, 241, 0.15);
+        color: var(--accent-color);
+    }
+
+    .menu li.active i {
+        color: var(--accent-color);
+    }
+
+    /* --- ANA İÇERİK ALANI --- */
+    .main-content {
+        padding: 16px 12px calc(90px + env(safe-area-inset-bottom));
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* --- BAŞLIK --- */
+    header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
         gap: 4px;
-        padding: 10px;
-        min-width: 70px;
+    }
+
+    header h2 {
+        font-size: 18px;
+    }
+
+    .date-display {
+        font-size: 11px;
+        opacity: 0.7;
+    }
+
+    /* --- İSTATİSTİK KARTLARI --- */
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .stat-card {
+        padding: 14px;
+        gap: 10px;
+        border-radius: var(--radius-md);
+    }
+
+    .stat-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .icon-box {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    .info h3 {
+        font-size: 11px;
+    }
+
+    .info p {
+        font-size: 15px;
+    }
+
+    /* --- DASHBOARD WİDGETLAR --- */
+    .dashboard-widgets {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .widget-card {
+        padding: 18px;
+    }
+
+    .widget-header {
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+    }
+
+    .widget-header h3 {
+        font-size: 14px;
+    }
+
+    /* Kronometre */
+    .timer-display {
+        font-size: 36px;
+        margin: 16px 0;
+    }
+
+    /* --- NOT & GÖREV WİDGETLAR --- */
+    .dashboard-content-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .content-widget {
+        padding: 18px;
+        min-height: 180px;
+    }
+
+    /* --- KARTLAR (Tools, AI, Websites vb.) --- */
+    .tools-grid,
+    .ai-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px;
+        padding-bottom: 20px;
+    }
+
+    .projects-list {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+
+    .tool-card,
+    .project-card {
+        height: auto;
+        min-height: 130px;
+        padding: 14px;
+        border-radius: var(--radius-md);
+    }
+
+    .tool-card h3,
+    .project-card h3 {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+    .tool-card p,
+    .project-card p {
+        font-size: 11px;
+        -webkit-line-clamp: 2;
+    }
+
+    .tool-link {
+        font-size: 11px;
+    }
+
+    .project-meta {
         font-size: 10px;
+    }
+
+    .btn-edit-tool {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+        opacity: 1;
+    }
+
+    /* --- BÖLÜM BAŞLIĞI (Kategori sekmeleri) --- */
+    .section-header {
+        padding: 12px 14px;
+        margin-bottom: 14px;
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+
+    .category-tabs {
+        gap: 6px;
+        margin-right: 8px;
+    }
+
+    .cat-btn {
+        padding: 7px 12px;
+        font-size: 11px;
+        border-radius: 10px;
+        white-space: nowrap;
+    }
+
+    .btn-add {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    /* --- PROJELER BAŞLIĞI --- */
+    .projects-header {
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .search-box {
+        padding: 0 14px;
+    }
+
+    .search-box input {
+        padding: 10px 0;
+        font-size: 13px;
+    }
+
+    /* --- ŞİFRE YÖNETİCİSİ --- */
+    #passwordsContainer .project-card {
+        height: auto;
+        min-height: 160px;
+    }
+
+    .btn-copy-password {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+
+    /* --- MODALLAR --- */
+    .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .modal-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 92vh;
+        overflow-y: auto;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+        padding: 24px 20px !important;
+        gap: 14px;
+        margin: 0 !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-confirm {
+        width: 100% !important;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+        padding-bottom: calc(24px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .modal-content h3 {
+        font-size: 17px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px 14px !important;
+        font-size: 16px !important; /* iOS zoom engelleme */
+    }
+
+    .modal-buttons {
+        gap: 10px;
+        margin-top: 8px;
+        flex-wrap: nowrap;
+    }
+
+    .btn-save,
+    .btn-cancel,
+    .btn-delete {
+        padding: 12px 16px;
+        font-size: 13px;
+        flex: 1;
         text-align: center;
         justify-content: center;
     }
 
-    .menu li i {
-        font-size: 18px;
+    .btn-modal-left {
+        flex: none;
+        font-size: 12px;
+        padding: 10px 12px;
     }
 
-    .main-content {
-        padding: 20px 16px 100px 16px;
+    /* AI Modal */
+    #aiModal .modal-content.modal-content-scrollable {
+        width: 100% !important;
+        max-height: 92vh;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
     }
 
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .tools-grid, .ai-grid, .projects-list {
+    #aiModal .ai-modal-form {
         grid-template-columns: 1fr !important;
-        gap: 16px;
     }
 
-    .project-card, .tool-card {
-        height: auto;
-        min-height: 140px;
-        padding: 20px;
+    #aiModal .ai-form-name,
+    #aiModal .ai-form-desc,
+    #aiModal .ai-form-categories,
+    #aiModal .ai-form-link {
+        grid-column: 1 !important;
     }
 
-    .dashboard-widgets, .dashboard-content-grid {
-        grid-template-columns: 1fr;
+    #aiModal .checkbox-group {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
     }
 
-    .modal-content {
-        width: 95%;
-        padding: 20px;
-        margin: 10px;
+    /* Proje detay modal */
+    .full-screen-modal .modal-content.project-manager-content {
+        width: 100% !important;
+        height: 92vh !important;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+        padding: 20px 16px !important;
+    }
+
+    .pm-header {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-bottom: 14px;
+        margin-bottom: 14px;
+    }
+
+    .pm-title-group {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .pm-input-title {
+        font-size: 15px !important;
     }
 
     .pm-body {
         flex-direction: column !important;
+        gap: 16px !important;
+        overflow-y: auto;
+    }
+
+    .pm-column {
+        overflow-y: visible;
+        padding-right: 0;
+    }
+
+    #pmNotes {
+        min-height: 120px;
+        flex: none !important;
+    }
+
+    /* --- TAKVİM --- */
+    .calendar-container {
+        height: calc(100vh - 180px);
+        border-radius: var(--radius-md);
+    }
+
+    .calendar-header {
+        padding: 12px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .cal-nav-group {
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .cal-nav-group h2 {
+        font-size: 15px;
+        min-width: 110px;
+    }
+
+    .cal-view-group {
+        align-self: center;
+    }
+
+    .cal-today-btn {
+        padding: 6px 12px;
+        font-size: 12px;
     }
 
     .calendar-grid-header div {
-        font-size: 10px;
-        padding: 8px 4px;
+        font-size: 9px;
+        padding: 6px 2px;
+        font-weight: 700;
     }
 
     .cal-day {
-        min-height: 70px;
+        min-height: 52px;
+        padding: 4px;
     }
-    
+
     .cal-day-num {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+        margin-bottom: 2px;
+    }
+
+    .cal-event-bar {
+        font-size: 8px;
+        padding: 1px 3px;
+        margin-top: 1px;
+    }
+
+    /* Yıl görünümü */
+    .year-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 14px;
+    }
+
+    /* --- HIZLI ERİŞİM --- */
+    .quick-links {
+        gap: 8px;
+    }
+
+    .link-item {
+        padding: 10px 14px;
+        font-size: 12px;
+        gap: 8px;
+    }
+
+    /* --- COUNT BADGE --- */
+    .count-badge {
         font-size: 11px;
+        padding: 3px 8px;
+    }
+
+    /* --- TOAST --- */
+    .toast-container {
+        top: auto;
+        bottom: calc(80px + env(safe-area-inset-bottom));
+        right: 12px;
+        left: 12px;
+        max-width: 100%;
+    }
+
+    .toast {
+        min-width: unset;
+        width: 100%;
+    }
+
+    /* --- KULLANICI PROFİLİ (üst bar'da) --- */
+    .user-profile {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+        gap: 6px;
+    }
+
+    .profile-info span {
+        display: none; /* Mobilde "Admin" yazısını gizle */
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .theme-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    /* --- AYARLAR MODALİ --- */
+    .settings-buttons-stack {
+        gap: 8px;
+    }
+}
+
+/* Çok küçük ekranlar (320px gibi) */
+@media (max-width: 380px) {
+    .tools-grid,
+    .ai-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card:last-child {
+        grid-column: 1;
+    }
+
+    .menu li {
+        min-width: 48px;
+        font-size: 8px;
+        padding: 6px 4px;
+    }
+
+    .menu li i {
+        font-size: 18px;
     }
 }
