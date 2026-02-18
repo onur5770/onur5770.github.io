@@ -328,14 +328,115 @@ const DashboardManager = {
         }
 
         AppState.dashboardTasks.forEach((task, index) => {
+            // Her göreve ID yoksa ekle
+            if (!task.id) {
+                task.id = Date.now() + Math.random();
+            }
+            
             const div = document.createElement('div');
             div.className = `dashboard-task ${task.completed ? 'completed' : ''}`;
+            div.draggable = true;
+            div.setAttribute('data-index', index);
+            div.setAttribute('data-id', task.id);
+            
+            // Drag olayları
+            div.addEventListener('dragstart', (e) => {
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', index);
+                div.classList.add('dragging');
+            });
+            
+            div.addEventListener('dragend', () => {
+                div.classList.remove('dragging');
+            });
+            
+            div.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                const draggingEl = document.querySelector('.dashboard-task.dragging');
+                if (draggingEl && draggingEl !== div) {
+                    const rect = div.getBoundingClientRect();
+                    const midpoint = rect.top + rect.height / 2;
+                    if (e.clientY < midpoint) {
+                        div.parentNode.insertBefore(draggingEl, div);
+                    } else {
+                        div.parentNode.insertBefore(draggingEl, div.nextSibling);
+                    }
+                }
+            });
+            
+            div.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                const toIndex = parseInt(div.getAttribute('data-index'));
+                
+                if (fromIndex !== toIndex) {
+                    const [movedTask] = AppState.dashboardTasks.splice(fromIndex, 1);
+                    AppState.dashboardTasks.splice(toIndex, 0, movedTask);
+                    debouncedSave.tasks();
+                    this.renderTasks();
+                }
+            });
+            
+            // Touch events for mobile
+            let touchStartY = 0;
+            let touchStartIndex = -1;
+            
+            div.addEventListener('touchstart', (e) => {
+                touchStartY = e.touches[0].clientY;
+                touchStartIndex = index;
+                div.classList.add('dragging');
+            });
+            
+            div.addEventListener('touchmove', (e) => {
+                if (touchStartIndex === -1) return;
+                e.preventDefault();
+                
+                const touchY = e.touches[0].clientY;
+                const deltaY = touchY - touchStartY;
+                
+                // Visual feedback
+                div.style.transform = `translateY(${deltaY}px)`;
+                div.style.opacity = '0.7';
+            });
+            
+            div.addEventListener('touchend', (e) => {
+                if (touchStartIndex === -1) return;
+                
+                div.classList.remove('dragging');
+                div.style.transform = '';
+                div.style.opacity = '';
+                
+                const touchEndY = e.changedTouches[0].clientY;
+                const deltaY = touchEndY - touchStartY;
+                const taskHeight = div.offsetHeight;
+                const moveCount = Math.round(deltaY / taskHeight);
+                
+                if (moveCount !== 0) {
+                    const newIndex = Math.max(0, Math.min(AppState.dashboardTasks.length - 1, touchStartIndex + moveCount));
+                    if (newIndex !== touchStartIndex) {
+                        const [movedTask] = AppState.dashboardTasks.splice(touchStartIndex, 1);
+                        AppState.dashboardTasks.splice(newIndex, 0, movedTask);
+                        debouncedSave.tasks();
+                        this.renderTasks();
+                    }
+                }
+                
+                touchStartIndex = -1;
+            });
             
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.className = 'task-checkbox';
             checkbox.checked = task.completed;
-            checkbox.onchange = () => this.toggleTask(index);
+            checkbox.onclick = (e) => {
+                e.stopPropagation();
+                this.toggleTaskById(task.id);
+            };
+            
+            const dragHandle = document.createElement('span');
+            dragHandle.className = 'drag-handle';
+            dragHandle.innerHTML = '<i class="fas fa-grip-vertical"></i>';
             
             const span = document.createElement('span');
             span.textContent = task.text;
@@ -344,8 +445,12 @@ const DashboardManager = {
             deleteBtn.className = 'delete-task-btn';
             deleteBtn.title = 'Sil';
             deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-            deleteBtn.onclick = () => this.deleteTask(index);
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                this.deleteTaskById(task.id);
+            };
             
+            div.appendChild(dragHandle);
             div.appendChild(checkbox);
             div.appendChild(span);
             div.appendChild(deleteBtn);
@@ -353,6 +458,37 @@ const DashboardManager = {
         });
         
         this.updateStats();
+    },
+    
+    toggleTaskById(id) {
+        const task = AppState.dashboardTasks.find(t => t.id === id);
+        if (task) {
+            task.completed = !task.completed;
+            debouncedSave.tasks();
+            
+            // Sadece ilgili kartı güncelle, tüm listeyi yeniden render etme
+            const taskEl = document.querySelector(`.dashboard-task[data-id="${id}"]`);
+            if (taskEl) {
+                if (task.completed) {
+                    taskEl.classList.add('completed');
+                } else {
+                    taskEl.classList.remove('completed');
+                }
+                const checkbox = taskEl.querySelector('.task-checkbox');
+                if (checkbox) checkbox.checked = task.completed;
+            }
+            
+            this.updateStats();
+        }
+    },
+    
+    deleteTaskById(id) {
+        const index = AppState.dashboardTasks.findIndex(t => t.id === id);
+        if (index > -1) {
+            AppState.dashboardTasks.splice(index, 1);
+            debouncedSave.tasks();
+            this.renderTasks();
+        }
     },
     
     addNote(text) {
@@ -377,6 +513,7 @@ const DashboardManager = {
     addTask(text) {
         if(text.trim()) {
             AppState.dashboardTasks.push({ 
+                id: Date.now() + Math.random(),
                 text: text.trim(), 
                 completed: false,
                 createdAt: new Date().toISOString()
@@ -386,18 +523,6 @@ const DashboardManager = {
         } else {
             showToast("Lütfen görev adını yazın.", "warning");
         }
-    },
-    
-    toggleTask(index) {
-        AppState.dashboardTasks[index].completed = !AppState.dashboardTasks[index].completed;
-        debouncedSave.tasks();
-        this.renderTasks();
-    },
-    
-    deleteTask(index) {
-        AppState.dashboardTasks.splice(index, 1);
-        debouncedSave.tasks();
-        this.renderTasks();
     }
 };
 
@@ -434,8 +559,6 @@ window.saveTask = function() {
 };
 
 window.deleteDashboardNote = function(index) { DashboardManager.deleteNote(index); };
-window.toggleTask = function(index) { DashboardManager.toggleTask(index); };
-window.deleteDashboardTask = function(index) { DashboardManager.deleteTask(index); };
 
 // ==========================================
 // 8. KRONOMETRE
@@ -2102,6 +2225,15 @@ document.addEventListener('keydown', function(event) {
     }
 
     if (event.key === 'Enter') {
+        // Önce confirm modal kontrol et
+        const confirmModal = document.getElementById('confirmModal');
+        if (confirmModal && confirmModal.style.display === 'flex') {
+            event.preventDefault();
+            event.stopPropagation();
+            acceptConfirm();
+            return;
+        }
+        
         if (document.activeElement.tagName === 'TEXTAREA') return;
         
         const openModal = Array.from(document.querySelectorAll('.modal-overlay'))
