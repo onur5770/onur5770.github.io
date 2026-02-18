@@ -360,9 +360,26 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
     line-height: 1.4;
     transition: var(--transition);
     box-shadow: var(--shadow-soft);
+    cursor: grab;
+    user-select: none;
 }
+.dashboard-task:active { cursor: grabbing; }
 .dashboard-task:hover { box-shadow: var(--shadow-card); }
-.dashboard-task.completed { opacity: 0.6; text-decoration: line-through; background: var(--button-bg); box-shadow: none; }
+.dashboard-task.completed { opacity: 0.6; text-decoration: line-through; background: var(--button-bg); box-shadow: none; cursor: default; }
+.dashboard-task.dragging { opacity: 0.5; background: var(--accent-color); color: white; transform: scale(1.02); box-shadow: var(--shadow-elevated); }
+
+.drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: grab;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+}
+.dashboard-task:hover .drag-handle { opacity: 0.8; }
+.drag-handle:active { cursor: grabbing; }
 .task-checkbox { accent-color: var(--accent-color); width: 18px; height: 18px; cursor: pointer; }
 .delete-task-btn { margin-left: auto; background: none; border: none; color: var(--text-secondary); cursor: pointer; opacity: 0; transition: var(--transition); }
 .dashboard-task:hover .delete-task-btn { opacity: 1; }
