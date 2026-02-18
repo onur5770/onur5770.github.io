@@ -216,6 +216,18 @@
                             <label>Yapılacak Görev:</label>
                             <input type="text" id="newTaskText" placeholder="Örn: Raporu tamamla">
                         </div>
+                        <div class="form-group">
+                            <label>Öncelik:</label>
+                            <select id="newTaskPriority">
+                                <option value="normal">Normal</option>
+                                <option value="high">🔴 Yüksek</option>
+                                <option value="low">🔵 Düşük</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Deadline (Opsiyonel):</label>
+                            <input type="date" id="newTaskDate">
+                        </div>
                         <div class="modal-buttons">
                             <button onclick="closeTaskModal()" class="btn-cancel">İptal</button>
                             <button onclick="saveTask()" class="btn-save">Ekle</button>
@@ -507,11 +519,7 @@
 
                 <div id="eventModal" class="modal-overlay">
                     <div class="modal-content">
-                        <h3>Etkinlik Ekle / Düzenle</h3>
-                        <div class="form-group">
-                            <label>Tarih:</label>
-                            <input type="date" id="eventDate">
-                        </div>
+                        <h3 id="eventModalTitle">Etkinlik Ekle</h3>
                         <div class="form-group">
                             <label>Başlık:</label>
                             <input type="text" id="eventTitle" placeholder="Örn: Proje Teslimi">
@@ -519,8 +527,8 @@
                         <div class="form-group">
                             <label>Tür:</label>
                             <select id="eventType">
-                                <option value="deadline">🔴 İş / Deadline</option>
-                                <option value="personal">🔵 Şahsi / Özel</option>
+                                <option value="deadline">🔴 İş </option>
+                                <option value="personal">🔵 Şahsi </option>
                             </select>
                         </div>
                         <div class="form-group event-completed-row">
