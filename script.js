@@ -73,9 +73,11 @@ const AppState = {
         toolIndex: -1,
         projectId: -1,
         eventId: -1,
+        eventDate: null,
         aiIndex: -1,
         webIndex: -1,
-        passIndex: -1
+        passIndex: -1,
+        noteId: null
     },
     
     ui: {
@@ -298,17 +300,39 @@ const DashboardManager = {
         }
 
         AppState.dashboardNotes.forEach((note, index) => {
+            // Her nota ID ekle
+            if (!note.id) {
+                note.id = Date.now() + Math.random() + index;
+            }
+            
             const div = document.createElement('div');
             div.className = 'dashboard-note';
-            div.textContent = note.text;
+            div.setAttribute('data-id', note.id);
+            
+            const textSpan = document.createElement('span');
+            textSpan.className = 'note-text';
+            textSpan.textContent = note.text;
+            
+            const actions = document.createElement('div');
+            actions.className = 'note-actions';
+            
+            const editBtn = document.createElement('button');
+            editBtn.className = 'edit-note-btn';
+            editBtn.title = 'Düzenle';
+            editBtn.innerHTML = '<i class="fas fa-pen"></i>';
+            editBtn.onclick = () => this.editNote(note.id);
             
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-note-btn';
             deleteBtn.title = 'Sil';
             deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
-            deleteBtn.onclick = () => this.deleteNote(index);
+            deleteBtn.onclick = () => this.deleteNoteById(note.id);
             
-            div.appendChild(deleteBtn);
+            actions.appendChild(editBtn);
+            actions.appendChild(deleteBtn);
+            
+            div.appendChild(textSpan);
+            div.appendChild(actions);
             container.appendChild(div);
         });
     },
@@ -438,8 +462,48 @@ const DashboardManager = {
             dragHandle.className = 'drag-handle';
             dragHandle.innerHTML = '<i class="fas fa-grip-vertical"></i>';
             
-            const span = document.createElement('span');
-            span.textContent = task.text;
+            const contentWrapper = document.createElement('div');
+            contentWrapper.className = 'task-content';
+            
+            const textSpan = document.createElement('span');
+            textSpan.className = 'task-text';
+            textSpan.textContent = task.text;
+            
+            const metaSpan = document.createElement('div');
+            metaSpan.className = 'task-meta';
+            
+            if (task.priority === 'high') {
+                const priorityBadge = document.createElement('span');
+                priorityBadge.className = 'task-badge priority-high';
+                priorityBadge.textContent = '🔴 Öncelikli';
+                metaSpan.appendChild(priorityBadge);
+            } else if (task.priority === 'low') {
+                const priorityBadge = document.createElement('span');
+                priorityBadge.className = 'task-badge priority-low';
+                priorityBadge.textContent = '🔵 Düşük';
+                metaSpan.appendChild(priorityBadge);
+            }
+            
+            if (task.dueDate) {
+                const dateBadge = document.createElement('span');
+                dateBadge.className = 'task-badge task-date';
+                const date = new Date(task.dueDate);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                date.setHours(0, 0, 0, 0);
+                
+                if (date < today && !task.completed) {
+                    dateBadge.classList.add('overdue');
+                }
+                
+                dateBadge.textContent = `📅 ${new Date(task.dueDate).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })}`;
+                metaSpan.appendChild(dateBadge);
+            }
+            
+            contentWrapper.appendChild(textSpan);
+            if (metaSpan.children.length > 0) {
+                contentWrapper.appendChild(metaSpan);
+            }
             
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-task-btn';
@@ -452,7 +516,7 @@ const DashboardManager = {
             
             div.appendChild(dragHandle);
             div.appendChild(checkbox);
-            div.appendChild(span);
+            div.appendChild(contentWrapper);
             div.appendChild(deleteBtn);
             container.appendChild(div);
         });
@@ -491,12 +555,39 @@ const DashboardManager = {
         }
     },
     
+    editNote(id) {
+        const note = AppState.dashboardNotes.find(n => n.id === id);
+        if (!note) return;
+        
+        const modal = document.getElementById('noteModal');
+        const input = document.getElementById('newNoteText');
+        const title = document.querySelector('#noteModal .modal-content h3');
+        
+        AppState.editing.noteId = id;
+        input.value = note.text;
+        title.textContent = '📝 Notu Düzenle';
+        modal.style.display = 'flex';
+        input.focus();
+    },
+    
     addNote(text) {
         if(text.trim()) {
-            AppState.dashboardNotes.push({ 
-                text: text.trim(), 
-                date: new Date().toISOString() 
-            });
+            if (AppState.editing.noteId) {
+                // Düzenleme modu
+                const note = AppState.dashboardNotes.find(n => n.id === AppState.editing.noteId);
+                if (note) {
+                    note.text = text.trim();
+                    note.updatedAt = new Date().toISOString();
+                }
+                AppState.editing.noteId = null;
+            } else {
+                // Yeni not
+                AppState.dashboardNotes.push({ 
+                    id: Date.now() + Math.random(),
+                    text: text.trim(), 
+                    date: new Date().toISOString() 
+                });
+            }
             debouncedSave.notes();
             this.renderNotes();
         } else {
@@ -510,12 +601,23 @@ const DashboardManager = {
         this.renderNotes();
     },
     
-    addTask(text) {
+    deleteNoteById(id) {
+        const index = AppState.dashboardNotes.findIndex(n => n.id === id);
+        if (index > -1) {
+            AppState.dashboardNotes.splice(index, 1);
+            debouncedSave.notes();
+            this.renderNotes();
+        }
+    },
+    
+    addTask(text, priority = 'normal', dueDate = null) {
         if(text.trim()) {
             AppState.dashboardTasks.push({ 
                 id: Date.now() + Math.random(),
                 text: text.trim(), 
                 completed: false,
+                priority: priority,
+                dueDate: dueDate,
                 createdAt: new Date().toISOString()
             });
             debouncedSave.tasks();
@@ -534,6 +636,9 @@ window.quickAddNote = function() {
 window.closeNoteModal = function() {
     document.getElementById('noteModal').style.display = 'none';
     document.getElementById('newNoteText').value = '';
+    AppState.editing.noteId = null;
+    const title = document.querySelector('#noteModal .modal-content h3');
+    if (title) title.textContent = '📌 Yeni Not Ekle';
 };
 
 window.saveNote = function() {
@@ -550,11 +655,15 @@ window.quickAddTask = function() {
 window.closeTaskModal = function() {
     document.getElementById('taskModal').style.display = 'none';
     document.getElementById('newTaskText').value = '';
+    document.getElementById('newTaskPriority').value = 'normal';
+    document.getElementById('newTaskDate').value = '';
 };
 
 window.saveTask = function() {
     const taskText = document.getElementById('newTaskText').value;
-    DashboardManager.addTask(taskText);
+    const priority = document.getElementById('newTaskPriority').value;
+    const dueDate = document.getElementById('newTaskDate').value;
+    DashboardManager.addTask(taskText, priority, dueDate);
     closeTaskModal();
 };
 
@@ -1018,6 +1127,7 @@ const ProjectsManager = {
             project.status = document.getElementById('pmStatusInput').value;
             project.notes = document.getElementById('pmNotes').value;
             debouncedSave.projects();
+            DashboardManager.updateStats(); // İstatistikleri güncelle
         }
     },
     
@@ -1107,6 +1217,7 @@ const ProjectsManager = {
         
         debouncedSave.projects();
         this.render();
+        DashboardManager.updateStats(); // İstatistikleri güncelle
         return true;
     },
     
@@ -1126,6 +1237,7 @@ const ProjectsManager = {
                     this.render();
                     document.getElementById('projectDetailModal').style.display = 'none';
                     AppState.editing.projectId = -1;
+                    DashboardManager.updateStats(); // İstatistikleri güncelle
                     showToast("Proje silindi!", "success");
                 }
             }
@@ -1871,8 +1983,19 @@ window.goToday = function() {
 
 window.openEventModal = function(dateStr, eventId = -1) {
     AppState.editing.eventId = eventId;
-    document.getElementById('eventDate').value = dateStr;
+    AppState.editing.eventDate = dateStr; // Tarihi state'te sakla
+    
     const delBtn = document.getElementById('btnDeleteEvent');
+    const modalTitle = document.getElementById('eventModalTitle');
+    
+    // Tarihi güzel formatlayıp başlıkta göster
+    const dateObj = new Date(dateStr);
+    const formattedDate = dateObj.toLocaleDateString('tr-TR', { 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric',
+        weekday: 'long'
+    });
 
     if (eventId > -1) {
         const evt = AppState.events.find(e => e.id === eventId);
@@ -1880,12 +2003,14 @@ window.openEventModal = function(dateStr, eventId = -1) {
             document.getElementById('eventTitle').value = evt.title;
             document.getElementById('eventType').value = evt.type;
             document.getElementById('eventCompleted').checked = evt.completed;
+            modalTitle.textContent = `📅 ${formattedDate}`;
         }
         delBtn.style.display = 'flex';
     } else {
         document.getElementById('eventTitle').value = '';
         document.getElementById('eventType').value = 'deadline';
         document.getElementById('eventCompleted').checked = false;
+        modalTitle.textContent = `📅 Yeni Etkinlik - ${formattedDate}`;
         delBtn.style.display = 'none';
     }
     document.getElementById('eventModal').style.display = 'flex';
@@ -1894,7 +2019,7 @@ window.openEventModal = function(dateStr, eventId = -1) {
 window.saveEvent = function() {
     const title = document.getElementById('eventTitle').value.trim();
     const type = document.getElementById('eventType').value;
-    const date = document.getElementById('eventDate').value;
+    const date = AppState.editing.eventDate; // State'ten al
     const completed = document.getElementById('eventCompleted').checked;
 
     if (!title) {
