@@ -334,7 +334,7 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
 .dashboard-note {
     background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
     color: #854d0e;
-    padding: 16px 28px 16px 16px;
+    padding: 14px 16px;
     border-radius: var(--radius-md);
     font-size: 13px;
     line-height: 1.5;
@@ -343,15 +343,48 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
     box-shadow: var(--shadow-soft);
     animation: fadeIn 0.3s ease;
     word-wrap: break-word; overflow-wrap: break-word; word-break: break-word;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
 }
 body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%, #713f12 100%); color: #fef08a; border-left-color: #eab308; }
-.delete-note-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: inherit; opacity: 0.5; cursor: pointer; font-size: 12px; transition: var(--transition); }
-.delete-note-btn:hover { opacity: 1; color: #ef4444; }
+
+.note-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.note-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.dashboard-note:hover .note-actions {
+    opacity: 1;
+}
+
+.edit-note-btn,
+.delete-note-btn { 
+    background: none; 
+    border: none; 
+    color: inherit; 
+    opacity: 0.6; 
+    cursor: pointer; 
+    font-size: 11px; 
+    transition: var(--transition);
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+.edit-note-btn:hover { opacity: 1; background: rgba(234, 179, 8, 0.2); }
+.delete-note-btn:hover { opacity: 1; color: #ef4444; background: rgba(239, 68, 68, 0.15); }
 
 .tasks-list { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
 .dashboard-task {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     padding: 14px 16px;
     background: var(--card-bg);
@@ -366,7 +399,64 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 .dashboard-task:active { cursor: grabbing; }
 .dashboard-task:hover { box-shadow: var(--shadow-card); }
 .dashboard-task.completed { opacity: 0.6; text-decoration: line-through; background: var(--button-bg); box-shadow: none; cursor: default; }
+.dashboard-task.completed .task-meta { opacity: 0.5; }
 .dashboard-task.dragging { opacity: 0.5; background: var(--accent-color); color: white; transform: scale(1.02); box-shadow: var(--shadow-elevated); }
+
+.task-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.task-text {
+    word-break: break-word;
+}
+
+.task-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.task-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.priority-high {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.priority-low {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+}
+
+.task-date {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+}
+
+.task-date.overdue {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
 
 .drag-handle {
     display: flex;
