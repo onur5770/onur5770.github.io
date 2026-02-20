@@ -346,6 +346,12 @@ header h2 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-prim
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.dashboard-note:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
 }
 body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%, #713f12 100%); color: #fef08a; border-left-color: #eab308; }
 
@@ -1992,5 +1998,125 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 
     .menu li i {
         font-size: 18px;
+    }
+}
+
+/* ==========================================
+   YEDEKLEME HATIRLATICI
+   ========================================== */
+
+.backup-reminder {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    z-index: 9999;
+    border: 2px solid var(--accent-color);
+    transform: translateY(150%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.backup-reminder.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.backup-reminder-content {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.backup-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+    animation: backupPulse 2s ease-in-out infinite;
+}
+
+@keyframes backupPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.backup-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.backup-text strong {
+    display: block;
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.backup-text p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.backup-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.btn-dismiss,
+.btn-backup-now {
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-dismiss {
+    background: var(--button-bg);
+    color: var(--text-secondary);
+}
+
+.btn-dismiss:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.btn-backup-now {
+    background: var(--accent-color);
+    color: white;
+}
+
+.btn-backup-now:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-elevated);
+}
+
+@media (max-width: 768px) {
+    .backup-reminder {
+        bottom: calc(16px + env(safe-area-inset-bottom));
+        right: 12px;
+        left: 12px;
+        max-width: none;
+    }
+    
+    .backup-reminder-content {
+        flex-direction: column;
+    }
+    
+    .backup-actions {
+        width: 100%;
+    }
+    
+    .btn-dismiss,
+    .btn-backup-now {
+        flex: 1;
     }
 }
