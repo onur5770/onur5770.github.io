@@ -313,6 +313,10 @@ const DashboardManager = {
             textSpan.className = 'note-text';
             textSpan.textContent = note.text;
             
+            // Çift tıklama ile düzenleme
+            textSpan.ondblclick = () => this.editNote(note.id);
+            div.ondblclick = () => this.editNote(note.id);
+            
             const actions = document.createElement('div');
             actions.className = 'note-actions';
             
@@ -2119,6 +2123,9 @@ window.exportData = function() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     
+    // Son yedekleme tarihini kaydet
+    localStorage.setItem('lastBackupDate', Date.now().toString());
+    
     showToast("Yedek indirildi!", "success");
 };
 
@@ -2325,7 +2332,63 @@ window.cancelConfirm = function() {
 };
 
 // ==========================================
-// 20. GLOBAL KLAVYE KISAYOLLARI
+// 21. YEDEKLEME UYARI SİSTEMİ
+// ==========================================
+
+function checkBackupReminder() {
+    const lastBackup = localStorage.getItem('lastBackupDate');
+    const now = Date.now();
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+    
+    if (!lastBackup || (now - parseInt(lastBackup)) > sevenDays) {
+        // Son yedek 7 günden eski veya hiç yedek alınmamış
+        const daysSince = lastBackup 
+            ? Math.floor((now - parseInt(lastBackup)) / (24 * 60 * 60 * 1000))
+            : '∞';
+        
+        setTimeout(() => {
+            const reminder = document.createElement('div');
+            reminder.className = 'backup-reminder';
+            reminder.innerHTML = `
+                <div class="backup-reminder-content">
+                    <div class="backup-icon">💾</div>
+                    <div class="backup-text">
+                        <strong>Yedekleme Hatırlatması</strong>
+                        <p>Son yedek: ${daysSince === '∞' ? 'Hiç alınmadı' : daysSince + ' gün önce'}</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button onclick="dismissBackupReminder()" class="btn-dismiss">Daha Sonra</button>
+                        <button onclick="openBackupNow()" class="btn-backup-now">Yedek Al</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(reminder);
+            
+            // 3 saniye sonra animasyonla göster
+            setTimeout(() => reminder.classList.add('show'), 100);
+        }, 3000); // Sayfa yüklendikten 3 saniye sonra
+    }
+}
+
+window.dismissBackupReminder = function() {
+    const reminder = document.querySelector('.backup-reminder');
+    if (reminder) {
+        reminder.classList.remove('show');
+        setTimeout(() => reminder.remove(), 300);
+        // 3 gün sonra tekrar hatırlat
+        localStorage.setItem('backupReminderDismissed', Date.now());
+    }
+};
+
+window.openBackupNow = function() {
+    dismissBackupReminder();
+    openSettingsModal();
+    // Yedekleme tarihini güncelle
+    localStorage.setItem('lastBackupDate', Date.now().toString());
+};
+
+// ==========================================
+// 22. CLEANUP VE EVENT LISTENERS
 // ==========================================
 
 document.addEventListener('keydown', function(event) {
@@ -2411,6 +2474,9 @@ document.addEventListener('DOMContentLoaded', () => {
         WebsitesManager.render('all');
         PasswordsManager.render();
         CalendarManager.init();
+        
+        // Yedekleme hatırlatıcısını kontrol et
+        checkBackupReminder();
         
         console.log('✅ RootPanel v2.0 başarıyla yüklendi!');
         
