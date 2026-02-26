@@ -2351,10 +2351,12 @@ function checkBackupReminder() {
             reminder.className = 'backup-reminder';
             reminder.innerHTML = `
                 <div class="backup-reminder-content">
-                    <div class="backup-icon">💾</div>
-                    <div class="backup-text">
-                        <strong>Yedekleme Hatırlatması</strong>
-                        <p>Son yedek: ${daysSince === '∞' ? 'Hiç alınmadı' : daysSince + ' gün önce'}</p>
+                    <div class="backup-header">
+                        <div class="backup-icon">💾</div>
+                        <div class="backup-text">
+                            <strong>Yedekleme Hatırlatması</strong>
+                            <p>Son yedek: ${daysSince === '∞' ? 'Hiç alınmadı' : daysSince + ' gün önce'}</p>
+                        </div>
                     </div>
                     <div class="backup-actions">
                         <button onclick="dismissBackupReminder()" class="btn-dismiss">Daha Sonra</button>
