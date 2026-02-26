@@ -2028,6 +2028,12 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 
 .backup-reminder-content {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.backup-header {
+    display: flex;
     gap: 16px;
     align-items: flex-start;
 }
@@ -2052,7 +2058,7 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
     display: block;
     font-size: 16px;
     color: var(--text-primary);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .backup-text p {
@@ -2064,7 +2070,6 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 .backup-actions {
     display: flex;
     gap: 8px;
-    margin-top: 16px;
 }
 
 .btn-dismiss,
@@ -2107,8 +2112,12 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
         max-width: none;
     }
     
-    .backup-reminder-content {
-        flex-direction: column;
+    .backup-header {
+        gap: 12px;
+    }
+    
+    .backup-icon {
+        font-size: 28px;
     }
     
     .backup-actions {
