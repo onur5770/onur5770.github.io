@@ -2082,11 +2082,68 @@ window.closeEventModal = function() {
 // ==========================================
 
 window.openSettingsModal = function() {
+    // Yedekleme ayarlarını yükle
+    const interval = localStorage.getItem('backupReminderInterval') || '7';
+    const intervalSelect = document.getElementById('backupReminderInterval');
+    if (intervalSelect) intervalSelect.value = interval;
+    
+    // Yedekleme durumunu güncelle
+    updateBackupReminderStatus();
+    
     document.getElementById('settingsModal').style.display = 'flex';
 };
 
 window.closeSettingsModal = function() {
     document.getElementById('settingsModal').style.display = 'none';
+};
+
+window.saveBackupReminderSettings = function() {
+    const interval = document.getElementById('backupReminderInterval').value;
+    localStorage.setItem('backupReminderInterval', interval);
+    
+    if (interval === '0') {
+        showToast("Yedekleme hatırlatıcısı kapatıldı", "info");
+    } else {
+        showToast(`Hatırlatma ${interval} günde bir olarak ayarlandı`, "success");
+    }
+};
+
+window.updateBackupReminderStatus = function() {
+    const statusEl = document.getElementById('backupReminderStatus');
+    if (!statusEl) return;
+    
+    const lastBackup = localStorage.getItem('lastBackupDate');
+    
+    if (!lastBackup) {
+        statusEl.textContent = 'Son yedek: Hiç alınmadı';
+        statusEl.style.color = 'var(--text-secondary)';
+    } else {
+        const daysSince = Math.floor((Date.now() - parseInt(lastBackup)) / (24 * 60 * 60 * 1000));
+        const lastDate = new Date(parseInt(lastBackup)).toLocaleDateString('tr-TR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        if (daysSince === 0) {
+            statusEl.textContent = `Son yedek: Bugün (${lastDate})`;
+            statusEl.style.color = '#10b981';
+        } else if (daysSince === 1) {
+            statusEl.textContent = `Son yedek: Dün (${lastDate})`;
+            statusEl.style.color = '#10b981';
+        } else if (daysSince < 7) {
+            statusEl.textContent = `Son yedek: ${daysSince} gün önce (${lastDate})`;
+            statusEl.style.color = '#10b981';
+        } else if (daysSince < 14) {
+            statusEl.textContent = `Son yedek: ${daysSince} gün önce (${lastDate})`;
+            statusEl.style.color = '#f59e0b';
+        } else {
+            statusEl.textContent = `Son yedek: ${daysSince} gün önce (${lastDate})`;
+            statusEl.style.color = '#ef4444';
+        }
+    }
 };
 
 window.exportData = function() {
@@ -2164,6 +2221,10 @@ window.importData = function(input) {
                     const d = json.data;
                     
                     if(d.theme) localStorage.setItem('theme', d.theme);
+                    
+                    // Yedek yükleme tarihini kaydet
+                    localStorage.setItem('lastBackupDate', Date.now().toString());
+                    
                     StorageManager.set('myTools', d.tools || []);
                     StorageManager.set('dashboardNotes', d.dashboardNotes || []);
                     StorageManager.set('dashboardTasks', d.dashboardTasks || []);
@@ -2336,26 +2397,41 @@ window.cancelConfirm = function() {
 // ==========================================
 
 function checkBackupReminder() {
+    const interval = parseInt(localStorage.getItem('backupReminderInterval') || '7');
+    
+    // Hatırlatma kapalıysa çık
+    if (interval === 0) return;
+    
     const lastBackup = localStorage.getItem('lastBackupDate');
     const now = Date.now();
-    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+    const intervalMs = interval * 24 * 60 * 60 * 1000;
     
-    if (!lastBackup || (now - parseInt(lastBackup)) > sevenDays) {
-        // Son yedek 7 günden eski veya hiç yedek alınmamış
+    if (!lastBackup || (now - parseInt(lastBackup)) > intervalMs) {
+        // Son yedek süre aşımı veya hiç yedek alınmamış
         const daysSince = lastBackup 
             ? Math.floor((now - parseInt(lastBackup)) / (24 * 60 * 60 * 1000))
-            : '∞';
+            : null;
         
         setTimeout(() => {
             const reminder = document.createElement('div');
             reminder.className = 'backup-reminder';
+            
+            let statusText;
+            if (!daysSince) {
+                statusText = 'Henüz hiç yedek alınmadı';
+            } else if (daysSince === 1) {
+                statusText = 'Son yedek: 1 gün önce';
+            } else {
+                statusText = `Son yedek: ${daysSince} gün önce`;
+            }
+            
             reminder.innerHTML = `
                 <div class="backup-reminder-content">
                     <div class="backup-header">
                         <div class="backup-icon">💾</div>
                         <div class="backup-text">
                             <strong>Yedekleme Hatırlatması</strong>
-                            <p>Son yedek: ${daysSince === '∞' ? 'Hiç alınmadı' : daysSince + ' gün önce'}</p>
+                            <p>${statusText}</p>
                         </div>
                     </div>
                     <div class="backup-actions">
@@ -2371,6 +2447,38 @@ function checkBackupReminder() {
         }, 3000); // Sayfa yüklendikten 3 saniye sonra
     }
 }
+
+window.saveBackupReminderSettings = function() {
+    const interval = document.getElementById('backupReminderInterval').value;
+    localStorage.setItem('backupReminderInterval', interval);
+    updateBackupReminderStatus();
+    showToast("Ayarlar kaydedildi!", "success");
+};
+
+window.updateBackupReminderStatus = function() {
+    const lastBackup = localStorage.getItem('lastBackupDate');
+    const statusEl = document.getElementById('backupReminderStatus');
+    
+    if (!statusEl) return;
+    
+    if (!lastBackup) {
+        statusEl.textContent = 'Son yedek: Henüz yedek alınmadı';
+        statusEl.style.color = '#ef4444';
+    } else {
+        const daysSince = Math.floor((Date.now() - parseInt(lastBackup)) / (24 * 60 * 60 * 1000));
+        const dateObj = new Date(parseInt(lastBackup));
+        const formattedDate = dateObj.toLocaleDateString('tr-TR', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        statusEl.textContent = `Son yedek: ${formattedDate} (${daysSince} gün önce)`;
+        statusEl.style.color = daysSince > 14 ? '#ef4444' : daysSince > 7 ? '#f59e0b' : '#10b981';
+    }
+};
 
 window.dismissBackupReminder = function() {
     const reminder = document.querySelector('.backup-reminder');
