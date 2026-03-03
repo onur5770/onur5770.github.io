@@ -527,8 +527,8 @@
                         <div class="form-group">
                             <label>Tür:</label>
                             <select id="eventType">
-                                <option value="deadline">🔴 İş </option>
-                                <option value="personal">🔵 Şahsi </option>
+                                <option value="deadline">🔴 İş / Deadline</option>
+                                <option value="personal">🔵 Şahsi / Özel</option>
                             </select>
                         </div>
                         <div class="form-group event-completed-row">
@@ -627,6 +627,19 @@
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
             <h3>⚙️ Ayarlar & Veri Yönetimi</h3>
+            
+            <div class="form-group">
+                <label>🔔 Yedekleme Hatırlatma Sıklığı:</label>
+                <select id="backupReminderInterval" onchange="saveBackupReminderSettings()">
+                    <option value="0">Hatırlatma Kapalı</option>
+                    <option value="3">3 Günde Bir</option>
+                    <option value="7" selected>7 Günde Bir</option>
+                    <option value="14">14 Günde Bir</option>
+                    <option value="30">30 Günde Bir</option>
+                </select>
+                <p class="settings-hint" id="backupReminderStatus">Son yedek: Hiç alınmadı</p>
+            </div>
+            
             <div class="form-group">
                 <p class="settings-description">
                     Verilerini yedekle veya yedeği geri yükle. <br>
