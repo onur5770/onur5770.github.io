@@ -628,19 +628,21 @@
         <div class="modal-content">
             <h3>⚙️ Ayarlar & Veri Yönetimi</h3>
             
-            <div class="form-group">
-                <label>🔔 Yedekleme Hatırlatma Sıklığı:</label>
-                <select id="backupReminderInterval" onchange="saveBackupReminderSettings()">
-                    <option value="0">Hatırlatma Kapalı</option>
-                    <option value="3">3 Günde Bir</option>
-                    <option value="7" selected>7 Günde Bir</option>
-                    <option value="14">14 Günde Bir</option>
-                    <option value="30">30 Günde Bir</option>
-                </select>
-                <p class="settings-hint" id="backupReminderStatus">Son yedek: Hiç alınmadı</p>
+            <div class="settings-section">
+                <div class="form-group">
+                    <label>🔔 Yedekleme Hatırlatma Sıklığı:</label>
+                    <select id="backupReminderInterval" onchange="saveBackupReminderSettings()">
+                        <option value="0">Hatırlatma Kapalı</option>
+                        <option value="3">3 Günde Bir</option>
+                        <option value="7" selected>7 Günde Bir</option>
+                        <option value="14">14 Günde Bir</option>
+                        <option value="30">30 Günde Bir</option>
+                    </select>
+                    <p class="settings-hint" id="backupReminderStatus">Son yedek: Hiç alınmadı</p>
+                </div>
             </div>
             
-            <div class="form-group">
+            <div class="settings-section">
                 <p class="settings-description">
                     Verilerini yedekle veya yedeği geri yükle. <br>
                     <b class="settings-warning-text">Dikkat:</b> Yedek yüklediğinde mevcut verilerin silinir ve yedeğin üzerine yazılır.
@@ -655,12 +657,16 @@
                     <input type="file" id="importFile" class="input-hidden" onchange="importData(this)">
                 </div>
             </div>
-            <div class="form-group settings-danger-zone">
-                <label class="settings-danger-label">⚠️ Tehlikeli Bölge</label>
-                <button onclick="clearAllData()" class="btn-delete btn-full-width">
-                    <i class="fas fa-trash-alt"></i> Tüm Verileri Sıfırla (Format)
-                </button>
+            
+            <div class="settings-section">
+                <div class="settings-danger-zone">
+                    <label class="settings-danger-label">⚠️ Tehlikeli Bölge</label>
+                    <button onclick="clearAllData()" class="btn-delete btn-full-width">
+                        <i class="fas fa-trash-alt"></i> Tüm Verileri Sıfırla (Format)
+                    </button>
+                </div>
             </div>
+            
             <div class="modal-buttons">
                 <button onclick="closeSettingsModal()" class="btn-cancel">Kapat</button>
             </div>
