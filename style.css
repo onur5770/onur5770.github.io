@@ -393,6 +393,13 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
     opacity: 1;
 }
 
+/* Mobilde butonları her zaman göster */
+@media (max-width: 768px) {
+    .note-actions {
+        opacity: 1;
+    }
+}
+
 .edit-note-btn,
 .delete-note-btn { 
     background: none; 
@@ -498,9 +505,16 @@ body.dark-mode .dashboard-note { background: linear-gradient(135deg, #422006 0%,
 .dashboard-task:hover .drag-handle { opacity: 0.8; }
 .drag-handle:active { cursor: grabbing; }
 .task-checkbox { accent-color: var(--accent-color); width: 18px; height: 18px; cursor: pointer; }
-.delete-task-btn { margin-left: auto; background: none; border: none; color: var(--text-secondary); cursor: pointer; opacity: 0; transition: var(--transition); }
+.delete-task-btn { margin-left: auto; background: none; border: none; color: var(--text-secondary); cursor: pointer; opacity: 0; transition: var(--transition); font-size: 14px; padding: 4px; }
 .dashboard-task:hover .delete-task-btn { opacity: 1; }
 .delete-task-btn:hover { color: #ef4444; }
+
+/* Mobilde görev silme butonunu her zaman göster */
+@media (max-width: 768px) {
+    .delete-task-btn {
+        opacity: 1;
+    }
+}
 
 /* ==========================================
    STANDART SAYFA TOOLBAR (Arama + Ekle)
@@ -2019,6 +2033,51 @@ body.dark-mode .toast-close:hover { background: rgba(255, 255, 255, 0.1); }
 
     .menu li i {
         font-size: 18px;
+    }
+    
+    /* --- TOUCH HEDEFLERİ --- */
+    .tool-card,
+    .project-card,
+    .ai-card,
+    .website-card {
+        min-height: 48px;
+    }
+    
+    .quick-link-btn {
+        min-height: 44px;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+    
+    .cat-btn {
+        min-height: 40px;
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    /* Dashboard kartları daha kolay dokunulabilir */
+    .dashboard-note,
+    .dashboard-task {
+        padding: 16px;
+        min-height: 52px;
+    }
+    
+    /* Ajanda hücreleri */
+    .cal-cell {
+        min-height: 60px;
+    }
+    
+    .cal-event-bar {
+        min-height: 24px;
+        padding: 4px 6px;
+        font-size: 11px;
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+    
+    /* Drag handle mobilde gizli (touch zaten var) */
+    .drag-handle {
+        display: none;
     }
 }
 
