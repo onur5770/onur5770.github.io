@@ -1,27 +1,47 @@
-# Kişisel Asistan 
+#  RootPanel v2.0
 
-**RootPanel**, modern bir siber güvenlik meraklısının veya yazılımcının günlük ihtiyaçlarını tek bir noktadan yönetmesi için tasarlanmış, **premium** arayüze sahip bir kişisel dashboard projesidir. Şimdilik ilk versiyon ile sizlere sunduğum bu projeyi zamanla daha da geliştireceğim.
+**Kişisel Verimlilik ve Güvenlik Yönetim Paneli**
 
-## ✨ Öne Çıkan Özellikler
+RootPanel; günlük iş akışınızı yönetmek, projelerinizi takip etmek, şifrelerinizi güvenle saklamak ve favori araçlarınıza hızlıca erişmek için tasarlanmış, **kurulum gerektirmeyen** ve tamamen tarayıcı tabanlı çalışan kapsamlı bir yönetim panelidir.
 
-* **🛡️ CTF & Araç Yönetimi:** Siber güvenlik araçlarını kategorize edin (Web, Reversing, Crypto vb.) ve hızlı erişim kartları oluşturun.
-* **🤖 Yapay Zeka Merkezi:** Sık kullandığınız AI araçlarını (Chat, Code, Image) tek bir sekmede toplayın.
-* **📅 Gelişmiş Ajanda:** Yıllık ve aylık görünüm desteğiyle iş teslimlerini ve kişisel etkinlikleri takip edin.
-* **🔑 Şifre Yöneticisi:** `Web Crypto API` kullanarak kriptografik olarak güvenli şifreler üretin ve hesap bilgilerinizi yönetin.
-* **📊 Proje Takip Sistemi:** Projelerinizi fikir aşamasından tamamlanma aşamasına kadar notlar ve görev listeleriyle yönetin.
-* **💾 Veri Yedekleme (Import/Export):** Tüm verilerinizi `.json` formatında dışa aktarın veya farklı bir cihazda yedeğinizi geri yükleyin.
-* **🌓 Dark Mode & Glassmorphism:** Göz yormayan koyu tema desteği ve estetik bulanıklık efektleri.
+---
 
-## 🛠️ Kullanılan Teknolojiler
+## 🌐 Canlı Kullanım (Kurulum Gerekmez!)
 
-* **Frontend:** HTML5, CSS3 (Premium Design Tokens), JavaScript (ES6+)
-* **İkonlar & Fontlar:** FontAwesome 6.4.0, Google Fonts (Inter)
-* **Veri Depolama:** LocalStorage (Tarayıcı tabanlı kalıcı depolama)
-* **Güvenlik:** Web Crypto API (Şifre üretimi için)
+Bu projeyi bilgisayarınıza indirmenize veya herhangi bir kod çalıştırmanıza gerek yoktur. Doğrudan tarayıcınız üzerinden kullanmaya başlamak için aşağıdaki bağlantıya tıklayabilirsiniz:
 
-## 🚀 Kurulum ve Kullanım
+👉 **[RootPanel'i Hemen Kullanmaya Başla](https://onur5770.github.io/)**
 
-Projeyi kurulum yapmadan doğrudan tarayıcınız üzerinden kullanabilirsiniz:
-[https://onur5770.github.io/]
+---
 
-## Eklememi veya düzenlememi istediğiniz bir şey için lütfen benimle iletişime geçin
+## 🌟 Öne Çıkan Özellikler
+
+* **📊 Dinamik Dashboard:** Aktif görevlerinizi ve devam eden projelerinizi tek bakışta görün.
+* **🛠️ Araç Yönetimi (CTF & Tools):** Siber güvenlik veya yazılım araçlarınızı kategorize edin.
+* **📂 Proje Takip Sistemi:** Projeler oluşturun, durumlarını güncelleyin ve alt görevler ekleyin.
+* **🔐 Şifre Yöneticisi:** Şifrelerinizi tarayıcınızda yerel olarak saklayın ve güçlü şifreler üretin.
+* **💾 Gelişmiş Yedekleme:** Tüm verilerinizi JSON olarak dışa aktarın veya geri yükleyin.
+* **🌓 Gece Modu:** Göz yormayan karanlık tema desteği.
+
+---
+
+## 🛠️ Teknik Altyapı ve Güvenlik
+
+RootPanel, gizliliğinizi ön planda tutacak şekilde **"Sunucusuz (Serverless)"** mantığıyla çalışır:
+
+* **Veri Gizliliği:** Hiçbir veriniz uzak bir sunucuya gönderilmez. Tüm verileriniz tarayıcınızın `localStorage` alanında saklanır.
+* **Teknoloji:** Saf JavaScript (Vanilla JS) ve modern CSS kullanılarak geliştirilmiştir.
+* **Güvenlik:** XSS saldırılarına karşı girdi arındırma (Sanitization) ve şifreler için XOR tabanlı gizleme mekanizması içerir.
+
+---
+
+## 📋 Kullanım İpuçları
+
+* **Veri Kaybını Önleyin:** Sayfa verileri tarayıcınıza kaydettiği için, tarayıcı geçmişini/önbelleğini temizlemeden önce **Ayarlar** bölümünden mutlaka **Yedek Al** butonunu kullanarak verilerinizi indirin.
+* **Cihaz Uyumluluğu:** GitHub Pages üzerinden hem masaüstü hem de mobil cihazlarınızdan erişebilirsiniz.
+
+---
+
+## 🤝 Katkıda Bulunma
+
+Geliştirmeler için her zaman açığım! Bir hata bulursanız veya yeni bir özellik eklemek isterseniz lütfen bana ulaşın.
