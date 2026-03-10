@@ -248,13 +248,14 @@
                 </div>
                 <div class="category-tabs-bar">
                     <button class="cat-btn active" onclick="filterAITools('all')">Tümü</button>
-                    <button class="cat-btn" onclick="filterAITools('general')">Genel</button>
                     <button class="cat-btn" onclick="filterAITools('chat')">Chat</button>
                     <button class="cat-btn" onclick="filterAITools('code')">Kod</button>
                     <button class="cat-btn" onclick="filterAITools('image')">Görsel</button>
                     <button class="cat-btn" onclick="filterAITools('cyber')">Siber</button>
                     <button class="cat-btn" onclick="filterAITools('audio')">Ses</button>
                     <button class="cat-btn" onclick="filterAITools('lesson')">Ders</button>
+                    <button class="cat-btn" onclick="filterAITools('general')">Diğer</button>
+
                 </div>
 
                 <div class="ai-grid" id="aiToolsContainer"></div>
@@ -277,13 +278,13 @@
                                 <div class="form-group ai-form-categories">
                                     <label>Kategoriler (Birden fazla seçilebilir):</label>
                                     <div class="checkbox-group">
-                                        <label><input type="checkbox" value="general"> Genel</label>
                                         <label><input type="checkbox" value="chat"> Chat</label>
                                         <label><input type="checkbox" value="code"> Kod</label>
                                         <label><input type="checkbox" value="image"> Görsel</label>
                                         <label><input type="checkbox" value="cyber"> Siber</label>
                                         <label><input type="checkbox" value="audio"> Ses</label>
                                         <label><input type="checkbox" value="lesson"> Ders</label>
+                                        <label><input type="checkbox" value="general"> Diğer</label>                                        
                                     </div>
                                 </div>
                                 <div class="form-group ai-form-link">
@@ -323,7 +324,7 @@
                     <button class="cat-btn" onclick="filterTools('forensic')">Forensic</button>
                     <button class="cat-btn" onclick="filterTools('stego')">Stego</button>
                     <button class="cat-btn" onclick="filterTools('crypto')">Kripto</button>
-                    <button class="cat-btn" onclick="filterTools('genel')">Genel</button>
+                    <button class="cat-btn" onclick="filterTools('genel')">Diğer</button>
                 </div>
 
                 <div class="tools-grid" id="toolsContainer"></div>
@@ -344,7 +345,7 @@
                                 <option value="forensic">Forensic</option>
                                 <option value="stego">Stenografi</option>
                                 <option value="crypto">Kriptoloji</option>
-                                <option value="genel">Genel</option>
+                                <option value="genel">Diğer</option>
                             </select>
                         </div>
                         <div class="form-group">
