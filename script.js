@@ -916,6 +916,16 @@ const ToolsManager = new CardManager({
         card.className = 'project-card';
         card.setAttribute('data-cat', tool.category);
         
+        const categoryNames = {
+            web: "WEB",
+            reversing: "REVERSING",
+            osint: "OSINT",
+            forensic: "FORENSIC",
+            stego: "STEGO",
+            crypto: "KRİPTO",
+            genel: "GENEL"
+        };
+        
         const editBtn = document.createElement('button');
         editBtn.className = 'btn-edit-tool';
         editBtn.innerHTML = '<i class="fas fa-pencil-alt"></i>';
@@ -925,7 +935,7 @@ const ToolsManager = new CardManager({
         header.className = 'tool-header';
         const tag = document.createElement('span');
         tag.className = `tool-tag tag-${tool.category}`;
-        tag.textContent = tool.category.toUpperCase();
+        tag.textContent = categoryNames[tool.category] || tool.category.toUpperCase();
         header.appendChild(tag);
         
         const title = document.createElement('h3');
@@ -1470,6 +1480,7 @@ const WebsitesManager = new CardManager({
         card.setAttribute('data-cat', web.category);
         
         const trNames = {
+            ctf: "CTF",
             news: "HABER",
             tech: "TEKNOLOJİ",
             siber: "SİBER",
