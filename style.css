@@ -1202,6 +1202,40 @@ input[type="checkbox"] {
 }
 body.dark-mode .tool-tag, body.dark-mode .ai-tag { background: rgba(255, 255, 255, 0.1) !important; color: #d1d5db !important; }
 
+/* Tools Kategorileri */
+.tag-web { background: rgba(59, 130, 246, 0.15) !important; color: #3b82f6 !important; }
+.tag-reversing { background: rgba(139, 92, 246, 0.15) !important; color: #8b5cf6 !important; }
+.tag-osint { background: rgba(16, 185, 129, 0.15) !important; color: #10b981 !important; }
+.tag-forensic { background: rgba(245, 158, 11, 0.15) !important; color: #f59e0b !important; }
+.tag-stego { background: rgba(236, 72, 153, 0.15) !important; color: #ec4899 !important; }
+.tag-crypto { background: rgba(239, 68, 68, 0.15) !important; color: #ef4444 !important; }
+.tag-genel { background: rgba(107, 114, 128, 0.15) !important; color: #6b7280 !important; }
+
+/* AI Tools Kategorileri */
+.tag-general { background: rgba(107, 114, 128, 0.15) !important; color: #6b7280 !important; }
+.tag-chat { background: rgba(59, 130, 246, 0.15) !important; color: #3b82f6 !important; }
+.tag-code { background: rgba(16, 185, 129, 0.15) !important; color: #10b981 !important; }
+.tag-image { background: rgba(236, 72, 153, 0.15) !important; color: #ec4899 !important; }
+.tag-cyber { background: rgba(239, 68, 68, 0.15) !important; color: #ef4444 !important; }
+.tag-audio { background: rgba(139, 92, 246, 0.15) !important; color: #8b5cf6 !important; }
+.tag-lesson { background: rgba(245, 158, 11, 0.15) !important; color: #f59e0b !important; }
+
+body.dark-mode .tag-web { background: rgba(59, 130, 246, 0.2) !important; color: #60a5fa !important; }
+body.dark-mode .tag-reversing { background: rgba(139, 92, 246, 0.2) !important; color: #a78bfa !important; }
+body.dark-mode .tag-osint { background: rgba(16, 185, 129, 0.2) !important; color: #34d399 !important; }
+body.dark-mode .tag-forensic { background: rgba(245, 158, 11, 0.2) !important; color: #fbbf24 !important; }
+body.dark-mode .tag-stego { background: rgba(236, 72, 153, 0.2) !important; color: #f472b6 !important; }
+body.dark-mode .tag-crypto { background: rgba(239, 68, 68, 0.2) !important; color: #f87171 !important; }
+body.dark-mode .tag-genel { background: rgba(107, 114, 128, 0.2) !important; color: #9ca3af !important; }
+
+body.dark-mode .tag-general { background: rgba(107, 114, 128, 0.2) !important; color: #9ca3af !important; }
+body.dark-mode .tag-chat { background: rgba(59, 130, 246, 0.2) !important; color: #60a5fa !important; }
+body.dark-mode .tag-code { background: rgba(16, 185, 129, 0.2) !important; color: #34d399 !important; }
+body.dark-mode .tag-image { background: rgba(236, 72, 153, 0.2) !important; color: #f472b6 !important; }
+body.dark-mode .tag-cyber { background: rgba(239, 68, 68, 0.2) !important; color: #f87171 !important; }
+body.dark-mode .tag-audio { background: rgba(139, 92, 246, 0.2) !important; color: #a78bfa !important; }
+body.dark-mode .tag-lesson { background: rgba(245, 158, 11, 0.2) !important; color: #fbbf24 !important; }
+
 .toast-container {
     position: fixed;
     top: 24px;
