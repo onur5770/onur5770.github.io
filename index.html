@@ -225,7 +225,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Son tarih (Opsiyonel):</label>
+                            <label>Deadline (Opsiyonel):</label>
                             <input type="date" id="newTaskDate">
                         </div>
                         <div class="modal-buttons">
@@ -281,7 +281,7 @@
                                         <label><input type="checkbox" value="chat"> Chat</label>
                                         <label><input type="checkbox" value="code"> Kod</label>
                                         <label><input type="checkbox" value="image"> Görsel</label>
-                                        <label><input type="checkbox" value="cyber"> Güvenlik</label>
+                                        <label><input type="checkbox" value="cyber"> Siber</label>
                                         <label><input type="checkbox" value="audio"> Ses</label>
                                         <label><input type="checkbox" value="lesson"> Ders</label>
                                     </div>
@@ -321,7 +321,7 @@
                     <button class="cat-btn" onclick="filterTools('reversing')">Reversing</button>
                     <button class="cat-btn" onclick="filterTools('osint')">OSINT</button>
                     <button class="cat-btn" onclick="filterTools('forensic')">Forensic</button>
-                    <button class="cat-btn" onclick="filterTools('stego')">Steno</button>
+                    <button class="cat-btn" onclick="filterTools('stego')">Stego</button>
                     <button class="cat-btn" onclick="filterTools('crypto')">Kripto</button>
                     <button class="cat-btn" onclick="filterTools('genel')">Genel</button>
                 </div>
@@ -430,7 +430,6 @@
                             <select id="newProjStatus">
                                 <option value="fikir">🟣 Fikir Aşamasında</option>
                                 <option value="devam">🟡 Devam Ediyor</option>
-                                <option value="iptal">🔴 Durduruldu</option>
                                 <option value="bitti">🟢 Tamamlandı</option>
                             </select>
                         </div>
@@ -528,8 +527,8 @@
                         <div class="form-group">
                             <label>Tür:</label>
                             <select id="eventType">
-                                <option value="deadline">🔴 İş / Son Tarih</option>
-                                <option value="personal">🔵 Şahsil</option>
+                                <option value="deadline">🔴 İş / Deadline</option>
+                                <option value="personal">🔵 Şahsi / Özel</option>
                             </select>
                         </div>
                         <div class="form-group event-completed-row">
@@ -581,12 +580,12 @@
                         <div class="form-group">
                             <label>Kategori:</label>
                             <select id="webCategory">
-                                <option value="news"> Haber / Okuma</option>
-                                <option value="tech"> Teknoloji</option>
-                                <option value="siber"> Siber</option>
-                                <option value="dev"> Yazılım</option>
-                                <option value="design"> Tasarım</option>
-                                <option value="other"> Diğer</option>
+                                <option value="news">📰 Haber / Okuma</option>
+                                <option value="tech">💻 Teknoloji</option>
+                                <option value="siber">🔒 Siber Güvenlik</option>
+                                <option value="dev">⚙️ Yazılım</option>
+                                <option value="design">🎨 Tasarım</option>
+                                <option value="other">📌 Diğer</option>
                             </select>
                         </div>
                         <div class="form-group">
